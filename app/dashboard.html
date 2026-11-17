@@ -163,11 +163,20 @@
           <label>E-Mail-Vorlage</label>
           <select id="templateSelect" onchange="generateEmail()">
             <option value="mockup_de">🇩🇪 Design-Entwurf / Mockup Angebot (Höchste Antwortrate)</option>
+            <option value="preview_reply_de">🇩🇪 Live-Demo Vorschau (Nischen-Demo für Interessenten)</option>
             <option value="no_website_de">🇩🇪 Keine Website vorhanden (Google Maps Treffer)</option>
             <option value="followup_de">🇩🇪 Follow-up (Tag 3)</option>
             <option value="breakup_de">🇩🇪 Letzte Nachfrage (Tag 7)</option>
             <option value="mockup_en">🇬🇧 Free Mockup / Preview Angle (English)</option>
+            <option value="preview_reply_en">🇬🇧 Live Demo Preview (Niche Demo)</option>
           </select>
+        </div>
+
+        <div class="form-group">
+          <label>Nischen-Demo (Live-Vorschau)</label>
+          <div style="font-size: 0.85rem; padding: 6px 10px; background: rgba(255,255,255,0.05); border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);">
+            <a id="nicheDemoLink" href="#" target="_blank" style="color: #63b3ed; text-decoration: underline; word-break: break-all;"></a>
+          </div>
         </div>
 
         <div class="form-group">
@@ -487,9 +496,25 @@
       generateEmail();
     }
 
+    function resolveDemoUrl(lead) {
+      if (!lead || !lead.niche) return 'https://www.chouifi.com/agency-showcase/';
+      const n = (lead.niche || '').toLowerCase();
+      if (n.includes('salon') || n.includes('friseur') || n.includes('kosmetik') || n.includes('beauty') || n.includes('haar') || n.includes('hair')) {
+        return 'https://www.chouifi.com/agency-showcase/demos/salon/';
+      }
+      return 'https://www.chouifi.com/agency-showcase/demos/craftsman/';
+    }
+
     function generateEmail() {
       const lead = leads.find(l => l.id === selectedLeadId) || leads[0];
       if (!lead) return;
+
+      const demoUrl = resolveDemoUrl(lead);
+      const demoLinkEl = document.getElementById('nicheDemoLink');
+      if (demoLinkEl) {
+        demoLinkEl.href = demoUrl;
+        demoLinkEl.textContent = `🔗 Live-Demo für ${lead.niche}: ${demoUrl}`;
+      }
 
       const tpl = document.getElementById('templateSelect').value;
       let subject = '';
@@ -512,6 +537,29 @@ Ich habe unverbindlich einen ersten Vorschau-Entwurf für ${lead.company} vorber
 Viele Grüße aus ${lead.city},
 [Ihr Name]
 [Ihre Telefonnummer]
+https://www.chouifi.com/agency-showcase/
+Live-Demo (${lead.niche}): ${demoUrl}`;
+      } else if (tpl === 'preview_reply_de') {
+        subject = `Live-Vorschau für ${lead.company} / Webauftritt`;
+        body = `Hallo ${ownerSalutation},
+
+vielen Dank für Ihre Rückmeldung!
+
+Ich habe Ihnen hier eine interaktive Live-Vorschau vorbereitet, wie ein moderner Auftritt für einen Betrieb wie ${lead.company} aussehen kann:
+➡️ ${demoUrl}
+
+Die drei wichtigsten Vorteile:
+1. 1-Klick-Anruf auf Smartphones: Kunden können sofort anrufen, ohne die Nummer mühsam abzutippen.
+2. Online-Anfrageformular: Kunden können auch abends um 21 Uhr unkompliziert ein Angebot anfordern.
+3. Ladezeit unter 1 Sekunde & Google Maps optimiert: Wird lokal bei Google besser gefunden.
+
+Das Ganze passe ich komplett an Ihr Logo, Ihre Fotos und Ihre Leistungen an. Die Erstellung dauert in der Regel nur 48 bis 72 Stunden.
+
+Wie gefällt Ihnen der Aufbau? Wenn Sie möchten, können wir heute oder morgen kurz 5 Minuten telefonieren, um offene Fragen zu klären.
+
+Beste Grüße,
+[Ihr Name]
+[Ihre Telefonnummer]
 https://www.chouifi.com/agency-showcase/`;
       } else if (tpl === 'no_website_de') {
         subject = `Tolle Google-Bewertungen für ${lead.company} – kurze Frage zur Website`;
@@ -529,7 +577,8 @@ Hätten Sie diese Woche Zeit für ein kurzes 5-Minuten-Telefonat, ob das für Si
 
 Beste Grüße,
 [Ihr Name]
-[Ihre Telefonnummer]`;
+[Ihre Telefonnummer]
+https://www.chouifi.com/agency-showcase/`;
       } else if (tpl === 'followup_de') {
         subject = `Re: Kurze Frage zu Ihrem Webauftritt / ${lead.company}`;
         body = `Hallo ${ownerSalutation},
@@ -554,7 +603,8 @@ Ich wünsche Ihnen und Ihrem Team weiterhin viel Erfolg in ${lead.city}!
 
 Beste Grüße,
 [Ihr Name]
-[Telefonnummer]`;
+[Telefonnummer]
+https://www.chouifi.com/agency-showcase/`;
       } else if (tpl === 'mockup_en') {
         subject = `Quick question regarding ${lead.company}'s website`;
         body = `Hi ${lead.owner || 'there'},
@@ -569,7 +619,31 @@ I actually put together a quick mockup concept for ${lead.company}. Would you be
 
 Best regards,
 [Your Name]
-[Phone Number]`;
+[Phone Number]
+https://www.chouifi.com/agency-showcase/
+Live Demo (${lead.niche}): ${demoUrl}`;
+      } else if (tpl === 'preview_reply_en') {
+        subject = `Live preview for ${lead.company}'s new website`;
+        body = `Hi ${lead.owner || 'there'},
+
+Thanks for getting back to me!
+
+I put together an interactive live preview showcasing how a modern online presence could look for ${lead.company}:
+➡️ ${demoUrl}
+
+Key advantages:
+1. 1-Tap Mobile Calling: Visitors call directly with a single click.
+2. Fast Online Quote Form: Collect client requests 24/7.
+3. Sub-second load times & Google Maps optimization.
+
+Everything is completely customized to your brand, photos, and services. Turnaround is typically 48-72 hours.
+
+What do you think? If you have 5 minutes this week, I'd love to chat and answer any questions.
+
+Best regards,
+[Your Name]
+[Phone Number]
+https://www.chouifi.com/agency-showcase/`;
       }
 
       document.getElementById('emailSubject').value = subject;
