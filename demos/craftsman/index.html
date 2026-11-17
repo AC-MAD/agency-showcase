@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meisterbetrieb Schmidt & Partner | Sanitär, Heizung & Notdienst</title>
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #f97316;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --gray: #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #fff; color: var(--dark); line-height: 1.6; }
+    
+    /* Top Bar */
+    .topbar { background: var(--dark); color: #fff; padding: 8px 20px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+    .topbar a { color: #38bdf8; text-decoration: none; font-weight: bold; }
+    
+    /* Header / Nav */
+    header { display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); z-index: 100; }
+    .logo { font-size: 20px; font-weight: 800; color: var(--dark); display: flex; align-items: center; gap: 8px; }
+    .logo span { color: var(--primary); }
+    .nav-cta { background: var(--primary); color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; transition: background 0.2s; }
+    .nav-cta:hover { background: var(--primary-dark); }
+    
+    /* Hero */
+    .hero { padding: 60px 24px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); text-align: center; }
+    .badge { display: inline-block; background: #e0f2fe; color: var(--primary-dark); font-size: 12px; font-weight: 700; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 16px; border: 1px solid #bae6fd; }
+    .hero h1 { font-size: 36px; font-weight: 800; color: var(--dark); max-width: 750px; margin: 0 auto 16px; line-height: 1.25; }
+    .hero p { font-size: 18px; color: var(--gray); max-width: 600px; margin: 0 auto 28px; }
+    .hero-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .btn-call { background: var(--accent); color: white; font-weight: 700; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-size: 16px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35); }
+    .btn-quote { background: white; color: var(--dark); border: 2px solid #cbd5e1; font-weight: 700; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-size: 16px; }
+    
+    /* Trust badges */
+    .trust-strip { display: flex; justify-content: center; gap: 32px; padding: 24px; background: white; border-bottom: 1px solid #f1f5f9; flex-wrap: wrap; font-size: 14px; font-weight: 600; color: #334155; }
+    
+    /* Services */
+    .section { padding: 60px 24px; max-width: 1100px; margin: 0 auto; }
+    .section-title { text-align: center; margin-bottom: 40px; }
+    .section-title h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .section-title p { color: var(--gray); }
+    
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 28px; transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.06); }
+    .card-icon { font-size: 32px; margin-bottom: 16px; }
+    .card h3 { font-size: 20px; margin-bottom: 8px; }
+    .card p { color: var(--gray); font-size: 14px; }
+    
+    /* Instant Quote Calculator / Form */
+    .quote-box { background: var(--light); border: 2px solid #e2e8f0; border-radius: 16px; padding: 36px; max-width: 650px; margin: 0 auto; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; }
+    .btn-submit { width: 100%; background: var(--primary); color: white; border: none; padding: 14px; font-size: 16px; font-weight: 700; border-radius: 8px; cursor: pointer; }
+    .btn-submit:hover { background: var(--primary-dark); }
+    
+    /* Mobile sticky call button */
+    .mobile-call-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--dark); padding: 12px 16px; box-shadow: 0 -4px 12px rgba(0,0,0,0.15); z-index: 999; }
+    .mobile-call-bar a { background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 16px; }
+    
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 28px; }
+      .mobile-call-bar { display: block; }
+      body { padding-bottom: 65px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div>📍 Meisterbetrieb für Musterstadt & 25 km Umkreis</div>
+    <div>🚨 24h-Notdienst: <a href="tel:015112345678">0151 / 1234 5678</a></div>
+  </div>
+
+  <header>
+    <div class="logo">🔧 Schmidt <span>Sanitär & Heizung</span></div>
+    <a href="#kontakt" class="nav-cta">Angebot anfordern</a>
+  </header>
+
+  <section class="hero">
+    <div class="badge">⭐ 4.9 von 5 Sternen auf Google (94 Bewertungen)</div>
+    <h1>Zuverlässiger Meisterbetrieb für Sanitär, Heizung & Badsanierung</h1>
+    <p>Schnell vor Ort, transparente Festpreise und saubere Handwerksarbeit in Ihrer Region.</p>
+    <div class="hero-actions">
+      <a href="tel:015112345678" class="btn-call">📞 Jetzt anrufen (0151 / 1234 5678)</a>
+      <a href="#kontakt" class="btn-quote">Kostenloses Angebot anfragen</a>
+    </div>
+  </section>
+
+  <div class="trust-strip">
+    <div>✅ 25+ Jahre Erfahrung</div>
+    <div>✅ Meisterbetrieb der Innung</div>
+    <div>✅ 24/7 Notdienst erreichbar</div>
+    <div>✅ Festpreisgarantie ohne böse Überraschungen</div>
+  </div>
+
+  <section class="section">
+    <div class="section-title">
+      <h2>Unsere Leistungen auf einen Blick</h2>
+      <p>Qualität und Zuverlässigkeit für private Haushalte und Gewerbe.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">🚿</div>
+        <h3>Moderne Badsanierung</h3>
+        <p>Von der barrierefreien Dusche bis zum schlüsselfertigen Traumbad aus einer Hand.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔥</div>
+        <h3>Heizung & Wärmepumpen</h3>
+        <p>Wartung, Reparatur und Modernisierung moderner Heizungsanlagen und Förderberatung.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚨</div>
+        <h3>24h Notdienst</h3>
+        <p>Rohrbruch, verstopfte Abflüsse oder Heizungsausfall? Wir sind rund um die Uhr für Sie da.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="kontakt">
+    <div class="section-title">
+      <h2>Kostenloses Angebot anfordern</h2>
+      <p>Füllen Sie kurz das Formular aus – wir melden uns innerhalb von 2 Stunden bei Ihnen.</p>
+    </div>
+    <div class="quote-box">
+      <form onsubmit="event.preventDefault(); alert('Vielen Dank! Ihre Anfrage wurde simuliert.');">
+        <div class="form-group">
+          <label>Benötigte Leistung</label>
+          <select required>
+            <option>Badsanierung / Renovierung</option>
+            <option>Heizungswartung / Neuinstallation</option>
+            <option>Akute Reparatur / Rohrbruch</option>
+            <option>Sonstige Anfrage</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Ihr Name</label>
+          <input type="text" placeholder="Vor- und Nachname" required>
+        </div>
+        <div class="form-group">
+          <label>Ihre Telefonnummer (für schnelle Rücksprache)</label>
+          <input type="tel" placeholder="z.B. 0151 12345678" required>
+        </div>
+        <div class="form-group">
+          <label>Kurze Beschreibung Ihres Vorhabens</label>
+          <textarea rows="3" placeholder="Worum geht es genau?"></textarea>
+        </div>
+        <button type="submit" class="btn-submit">🚀 Unverbindliche Anfrage absenden</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Mobile Sticky Bar -->
+  <div class="mobile-call-bar">
+    <a href="tel:015112345678">📞 Jetzt direkt anrufen</a>
+  </div>
+
+</body>
+</html>
