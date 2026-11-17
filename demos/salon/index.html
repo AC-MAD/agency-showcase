@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atelier Coiffeur & Barbershop | Exklusive Haarkunst</title>
+  <style>
+    :root {
+      --gold: #d97706;
+      --gold-light: #fef3c7;
+      --dark: #18181b;
+      --card-bg: #27272a;
+      --text-muted: #a1a1aa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--dark); color: #f4f4f5; line-height: 1.6; }
+    
+    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 32px; border-bottom: 1px solid #3f3f46; position: sticky; top: 0; background: rgba(24,24,27,0.9); backdrop-filter: blur(8px); z-index: 100; }
+    .logo { font-size: 20px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #fff; }
+    .logo span { color: var(--gold); }
+    .nav-btn { background: var(--gold); color: #000; font-weight: 700; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-size: 14px; transition: opacity 0.2s; }
+    .nav-btn:hover { opacity: 0.9; }
+    
+    .hero { text-align: center; padding: 80px 20px 60px; max-width: 800px; margin: 0 auto; }
+    .badge { display: inline-block; border: 1px solid var(--gold); color: var(--gold); font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 20px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+    .hero h1 { font-size: 44px; font-weight: 800; line-height: 1.2; margin-bottom: 18px; color: #fff; }
+    .hero p { font-size: 18px; color: var(--text-muted); margin-bottom: 30px; }
+    .hero-btn { background: var(--gold); color: #000; font-weight: 800; font-size: 16px; padding: 16px 36px; border-radius: 8px; text-decoration: none; display: inline-block; box-shadow: 0 4px 20px rgba(217, 119, 6, 0.4); }
+    
+    .section { padding: 60px 24px; max-width: 900px; margin: 0 auto; }
+    .section-title { text-align: center; margin-bottom: 40px; }
+    .section-title h2 { font-size: 30px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .section-title p { color: var(--text-muted); }
+    
+    .menu-grid { display: grid; gap: 16px; }
+    .menu-item { display: flex; justify-content: space-between; align-items: baseline; background: var(--card-bg); padding: 18px 24px; border-radius: 10px; border: 1px solid #3f3f46; }
+    .menu-name { font-weight: 700; font-size: 17px; }
+    .menu-desc { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    .menu-price { font-weight: 800; font-size: 18px; color: var(--gold); margin-left: 20px; white-space: nowrap; }
+    
+    .info-card { background: #1f1f23; border: 1px solid #3f3f46; border-radius: 12px; padding: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; }
+    .info-card h3 { color: var(--gold); font-size: 18px; margin-bottom: 12px; }
+    .info-card p { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+    
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 32px; }
+      .info-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">ATELIER <span>COIFFEUR</span></div>
+    <a href="#termin" class="nav-btn">Termin buchen</a>
+  </header>
+
+  <div class="hero">
+    <div class="badge">Friseurmeister & Barber in Musterstadt</div>
+    <h1>Individuelles Styling, erstklassige Schnitte & pure Entspannung.</h1>
+    <p>Erleben Sie moderne Schnittkunst und exklusiven Service in unserem Salon im Herzen der Altstadt.</p>
+    <a href="#termin" class="hero-btn">🗓️ Jetzt Termin vereinbaren</a>
+  </div>
+
+  <section class="section">
+    <div class="section-title">
+      <h2>Leistungen & Preise</h2>
+      <p>Transparente Preisgestaltung für Damen, Herren & Bartpflege</p>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div>
+          <div class="menu-name">Herren Classic Cut & Styling</div>
+          <div class="menu-desc">Beratung, Haarwäsche, typgerechter Haarschnitt, Styling & Nackenrasur</div>
+        </div>
+        <div class="menu-price">34,00 €</div>
+      </div>
+
+      <div class="menu-item">
+        <div>
+          <div class="menu-name">Traditionelle Bartpflege & Hot Towel</div>
+          <div class="menu-desc">Konturenrasur mit dem Rasiermesser, warme Kompresse und pflegendes Bartöl</div>
+        </div>
+        <div class="menu-price">28,00 €</div>
+      </div>
+
+      <div class="menu-item">
+        <div>
+          <div class="menu-name">Damen Waschen, Schneiden & Föhnen</div>
+          <div class="menu-desc">Typberatung, Haarmaske, Präzisionsschnitt und professionelles Föhn-Styling</div>
+        </div>
+        <div class="menu-price">ab 56,00 €</div>
+      </div>
+
+      <div class="menu-item">
+        <div>
+          <div class="menu-name">Balayage / Glossing & Coloration</div>
+          <div class="menu-desc">Individuelle Farbveredelung mit hochwertigen, schonenden Farbprodukten</div>
+        </div>
+        <div class="menu-price">ab 85,00 €</div>
+      </div>
+    </div>
+
+    <div class="info-card" id="termin">
+      <div>
+        <h3>📍 Öffnungszeiten & Standort</h3>
+        <p>
+          <strong>Mo - Fr:</strong> 09:00 - 18:30 Uhr<br>
+          <strong>Samstag:</strong> 08:30 - 15:00 Uhr<br>
+          <strong>Sonntag:</strong> Geschlossen<br><br>
+          Marktstraße 14, 12345 Musterstadt
+        </p>
+      </div>
+      <div>
+        <h3>📞 Direkte Terminabsprache</h3>
+        <p>
+          Rufen Sie uns direkt an oder schreiben Sie uns per WhatsApp:<br><br>
+          <a href="tel:015112345678" style="color: var(--gold); font-size: 18px; font-weight: bold; text-decoration: none;">0151 / 1234 5678</a><br><br>
+          Wir freuen uns auf Ihren Besuch!
+        </p>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
