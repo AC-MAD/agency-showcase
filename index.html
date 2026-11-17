@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LocalWeb Studio | Websites für Handwerker & lokale Unternehmen</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --dark: #0f172a;
+      --slate: #334155;
+      --light-slate: #64748b;
+      --bg-gray: #f8fafc;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { color: var(--dark); background: #ffffff; line-height: 1.6; }
+    
+    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 32px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 100; }
+    .logo { font-size: 22px; font-weight: 800; color: var(--dark); display: flex; align-items: center; gap: 8px; }
+    .logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--slate); font-weight: 600; font-size: 15px; }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-btn { background: var(--primary); color: white !important; padding: 10px 20px; border-radius: 8px; font-weight: 700; transition: background 0.2s; }
+    .nav-btn:hover { background: var(--primary-hover); }
+    
+    .hero { padding: 90px 24px 70px; text-align: center; max-width: 900px; margin: 0 auto; }
+    .pill { display: inline-block; background: #eff6ff; color: var(--primary); font-size: 13px; font-weight: 700; padding: 6px 16px; border-radius: 30px; margin-bottom: 24px; border: 1px solid #bfdbfe; }
+    .hero h1 { font-size: 48px; font-weight: 900; line-height: 1.18; letter-spacing: -1px; margin-bottom: 20px; }
+    .hero p { font-size: 20px; color: var(--light-slate); max-width: 700px; margin: 0 auto 36px; }
+    .hero-cta { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-main { background: var(--primary); color: white; padding: 16px 32px; border-radius: 10px; font-weight: 700; font-size: 16px; text-decoration: none; box-shadow: 0 4px 16px rgba(37,99,235,0.3); }
+    .btn-secondary { background: white; border: 2px solid var(--border); color: var(--slate); padding: 16px 32px; border-radius: 10px; font-weight: 700; font-size: 16px; text-decoration: none; }
+    
+    .stats-bar { display: flex; justify-content: center; gap: 48px; padding: 32px 24px; background: var(--bg-gray); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); flex-wrap: wrap; text-align: center; }
+    .stat-number { font-size: 32px; font-weight: 800; color: var(--primary); }
+    .stat-label { font-size: 13px; font-weight: 600; color: var(--light-slate); text-transform: uppercase; margin-top: 4px; }
+    
+    .section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+    .section-title { text-align: center; margin-bottom: 50px; }
+    .section-title h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+    .section-title p { color: var(--light-slate); font-size: 17px; }
+    
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
+    .portfolio-card { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.04); transition: transform 0.2s; }
+    .portfolio-card:hover { transform: translateY(-6px); }
+    .card-banner { height: 180px; background: linear-gradient(135deg, #0284c7, #0f172a); display: flex; align-items: center; justify-content: center; font-size: 54px; }
+    .card-banner.salon { background: linear-gradient(135deg, #d97706, #18181b); }
+    .portfolio-body { padding: 24px; }
+    .portfolio-body h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .portfolio-body p { color: var(--light-slate); font-size: 14px; margin-bottom: 20px; }
+    .demo-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--primary); text-decoration: none; font-size: 15px; }
+    
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-top: 40px; }
+    .pricing-card { border: 1px solid var(--border); border-radius: 16px; padding: 36px; background: white; }
+    .pricing-card.featured { border: 2px solid var(--primary); position: relative; box-shadow: 0 10px 30px rgba(37,99,235,0.1); }
+    .pricing-badge { position: absolute; top: -14px; right: 24px; background: var(--primary); color: white; font-size: 12px; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; }
+    .price-num { font-size: 44px; font-weight: 900; color: var(--dark); margin: 20px 0 10px; }
+    .price-num span { font-size: 16px; font-weight: 500; color: var(--light-slate); }
+    .feature-list { list-style: none; margin: 24px 0 32px; }
+    .feature-list li { padding: 8px 0; font-size: 15px; color: var(--slate); display: flex; align-items: center; gap: 10px; }
+    
+    .contact-card { background: #0f172a; color: white; border-radius: 24px; padding: 60px 36px; text-align: center; max-width: 800px; margin: 0 auto; }
+    .contact-card h2 { font-size: 36px; font-weight: 800; margin-bottom: 16px; }
+    .contact-card p { color: #94a3b8; font-size: 18px; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .direct-contact { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; font-size: 18px; font-weight: 700; }
+    .direct-contact a { color: #38bdf8; text-decoration: none; }
+    
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 34px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">⚡ LocalWeb <span>Studio</span></div>
+    <div class="nav-links">
+      <a href="#vorteile">Vorteile</a>
+      <a href="#beispiele">Beispiele</a>
+      <a href="#preise">Preise</a>
+      <a href="#kontakt" class="nav-btn">Kostenlose Website-Analyse</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="pill">🚀 Mehr Kundenanfragen für Ihren lokalen Betrieb</div>
+    <h1>Schlüsselfertige Websites für Handwerker & lokale Dienstleister.</h1>
+    <p>Wir bauen moderne, blitzschnelle Websites, die auf Smartphones überzeugen und Besucher in zahlende Kunden verwandeln. Fertig in nur 72 Stunden.</p>
+    <div class="hero-cta">
+      <a href="#beispiele" class="btn-main">Live-Demos ansehen</a>
+      <a href="#kontakt" class="btn-secondary">Kostenloses Angebot anfragen</a>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div>
+      <div class="stat-number">&lt; 72 Std.</div>
+      <div class="stat-label">Fertigstellung & Livegang</div>
+    </div>
+    <div>
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Mobiloptimiert (iOS & Android)</div>
+    </div>
+    <div>
+      <div class="stat-number">0 €</div>
+      <div class="stat-label">Versteckte Kosten oder Technik-Stress</div>
+    </div>
+  </div>
+
+  <section class="section" id="beispiele">
+    <div class="section-title">
+      <h2>Fertige Branchen-Demos</h2>
+      <p>Klicken Sie auf eine Demo, um zu sehen, wie Ihr Webauftritt aussehen könnte.</p>
+    </div>
+
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <div class="card-banner">🔧</div>
+        <div class="portfolio-body">
+          <h3>Handwerk, Sanitär & Bauservice</h3>
+          <p>Ausgelegt auf 1-Klick-Anrufe, 24h-Notdienst-Hervorhebung und ein schnelles Anfrageformular für Kundenangebote.</p>
+          <a href="../demos/craftsman/index.html" class="demo-link">Live-Vorschau öffnen ➔</a>
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="card-banner salon">✂️</div>
+        <div class="portfolio-body">
+          <h3>Friseur, Barbershop & Kosmetik</h3>
+          <p>Edles, modernes Design mit übersichtlicher Menü- & Preisliste, Öffnungszeiten und einfacher Terminanfrage.</p>
+          <a href="../demos/salon/index.html" class="demo-link">Live-Vorschau öffnen ➔</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="preise">
+    <div class="section-title">
+      <h2>Einfache, transparente Preise</h2>
+      <p>Keine Agentur-Aufschläge, keine bösen Überraschungen.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Beliebteste Option</div>
+        <h3>Rundum-Sorglos Flatrate</h3>
+        <p style="color: var(--light-slate); font-size: 14px;">Ideal für Betriebe, die null Zeit für Website-Pflege haben.</p>
+        <div class="price-num">79 € <span>/ Monat</span></div>
+        <ul class="feature-list">
+          <li>✅ <strong>0 € Setup-Gebühr</strong></li>
+          <li>✅ Maßgeschneiderte Website in 72h</li>
+          <li>✅ Inkl. High-Speed Hosting & SSL</li>
+          <li>✅ Domain & E-Mail Postfach inklusive</li>
+          <li>✅ Monatliche Text- & Inhaltsänderungen</li>
+          <li>✅ DSGVO-konformes Impressum & Datenschutz</li>
+        </ul>
+        <a href="#kontakt" class="btn-main" style="display: block; text-align: center;">Jetzt unverbindlich anfragen</a>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Einmaliger Festpreis</h3>
+        <p style="color: var(--light-slate); font-size: 14px;">Sie besitzen die Website komplett nach Fertigstellung.</p>
+        <div class="price-num">650 € <span>einmalig</span></div>
+        <ul class="feature-list">
+          <li>✅ Komplette Website schlüsselfertig</li>
+          <li>✅ Perfekt optimiert für Smartphones</li>
+          <li>✅ Kontakt- & Angebotsformular</li>
+          <li>✅ Google Maps & Local SEO Setup</li>
+          <li>✅ 14 Tage Support nach Launch inklusive</li>
+          <li>✅ Optional: 29 €/Mo für Hosting & Backups</li>
+        </ul>
+        <a href="#kontakt" class="btn-secondary" style="display: block; text-align: center;">Jetzt anfragen</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section" id="kontakt">
+    <div class="contact-card">
+      <h2>Bereit für mehr Kundenaufträge?</h2>
+      <p>Schreiben Sie uns eine kurze Nachricht oder rufen Sie uns direkt an. Wir schauen uns Ihren aktuellen Auftritt kostenlos an.</p>
+      <div class="direct-contact">
+        <div>📞 Tel: <a href="tel:015112345678">0151 / 1234 5678</a></div>
+        <div>📧 E-Mail: <a href="mailto:kontakt@localweb-studio.de">kontakt@localweb-studio.de</a></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
