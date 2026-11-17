@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agency Command Center | Local Website Sales Dashboard</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --success: #16a34a;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 24px; min-height: 100vh; }
+    
+    .container { max-width: 1300px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .title-area h1 { font-size: 26px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+    .title-area p { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+    
+    /* Stats Bar */
+    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .metric-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .metric-label { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .metric-val { font-size: 28px; font-weight: 800; margin-top: 8px; color: #fff; }
+    .metric-val.green { color: #4ade80; }
+    
+    /* Layout */
+    .main-grid { display: grid; grid-template-columns: 1fr 420px; gap: 24px; }
+    @media (max-width: 1024px) {
+      .main-grid { grid-template-columns: 1fr; }
+    }
+    
+    /* Card Container */
+    .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .panel-header h2 { font-size: 18px; font-weight: 700; }
+    
+    /* Buttons */
+    .btn { background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px; transition: background 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+    .btn:hover { background: var(--primary-hover); }
+    .btn-secondary { background: #334155; color: #f8fafc; }
+    .btn-secondary:hover { background: #475569; }
+    .btn-success { background: var(--success); }
+    .btn-success:hover { background: #15803d; }
+    .btn-sm { padding: 4px 10px; font-size: 12px; }
+    
+    /* Table */
+    .table-container { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+    th { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 12px; text-transform: uppercase; }
+    td { padding: 14px; border-bottom: 1px solid #233044; vertical-align: middle; }
+    tr:hover { background: rgba(255,255,255,0.02); }
+    
+    .badge-status { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; display: inline-block; }
+    .status-Discovered { background: #3b82f620; color: #60a5fa; border: 1px solid #3b82f640; }
+    .status-Emailed { background: #eab30820; color: #facc15; border: 1px solid #eab30840; }
+    .status-Replied { background: #a855f720; color: #c084fc; border: 1px solid #a855f740; }
+    .status-Won { background: #22c55e20; color: #4ade80; border: 1px solid #22c55e40; }
+    .status-Lost { background: #ef444420; color: #f87171; border: 1px solid #ef444440; }
+    
+    /* Outreach Sidebar Box */
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+    input, select, textarea { width: 100%; background: #0b1120; border: 1px solid var(--border); border-radius: 8px; padding: 10px; color: #fff; font-size: 14px; outline: none; }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary); }
+    
+    .preview-box { background: #0b1120; border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-top: 14px; font-size: 13px; line-height: 1.6; white-space: pre-wrap; color: #cbd5e1; max-height: 280px; overflow-y: auto; }
+    .action-row { display: flex; gap: 8px; margin-top: 14px; }
+    
+    /* Modal */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; width: 500px; max-width: 95%; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .close-btn { background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="title-area">
+        <h1>🎯 Agency Outreach & Client Machine</h1>
+        <p>Goal: Target local businesses, launch personalized email campaigns, and sign your 1st client.</p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-secondary" onclick="exportData()">💾 Backup JSON</button>
+        <button class="btn" onclick="openAddModal()">➕ Neuer Lead</button>
+      </div>
+    </header>
+
+    <!-- Metrics -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Gefundene Leads</div>
+        <div class="metric-val" id="totalLeads">0</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">E-Mails Gesendet</div>
+        <div class="metric-val" id="totalEmailed">0</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Antworten (Interessenten)</div>
+        <div class="metric-val" id="totalReplies" style="color: #c084fc;">0</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Gewonnene Kunden (Goal)</div>
+        <div class="metric-val green" id="totalWon">0</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Pipeline-Umsatz</div>
+        <div class="metric-val green" id="pipelineVal">0 €</div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-grid">
+      <!-- Leads Table -->
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Lokale Leads Pipeline</h2>
+          <span style="font-size: 13px; color: var(--text-muted);">Klicke auf einen Lead zum Vorbereiten der E-Mail</span>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Betrieb / Name</th>
+                <th>Branche & Ort</th>
+                <th>Kontakt</th>
+                <th>Status</th>
+                <th>Aktion</th>
+              </tr>
+            </thead>
+            <tbody id="leadsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Cold Email Sender Panel -->
+      <div class="panel">
+        <div class="panel-header">
+          <h2>⚡ 1-Klick Cold Email Generator</h2>
+        </div>
+        
+        <div class="form-group">
+          <label>Ausgewählter Lead</label>
+          <select id="selectedLeadSelect" onchange="loadSelectedLead()">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>E-Mail-Vorlage</label>
+          <select id="templateSelect" onchange="generateEmail()">
+            <option value="mockup_de">🇩🇪 Design-Entwurf / Mockup Angebot (Höchste Antwortrate)</option>
+            <option value="no_website_de">🇩🇪 Keine Website vorhanden (Google Maps Treffer)</option>
+            <option value="followup_de">🇩🇪 Follow-up (Tag 3)</option>
+            <option value="breakup_de">🇩🇪 Letzte Nachfrage (Tag 7)</option>
+            <option value="mockup_en">🇬🇧 Free Mockup / Preview Angle (English)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Betreffzeile</label>
+          <input type="text" id="emailSubject" readonly>
+        </div>
+
+        <div class="form-group">
+          <label>E-Mail Vorschau</label>
+          <div class="preview-box" id="emailBodyPreview"></div>
+        </div>
+
+        <div class="action-row">
+          <button class="btn btn-secondary" style="flex: 1;" onclick="copyEmailToClipboard()">📋 Kopieren</button>
+          <button class="btn btn-success" style="flex: 1;" onclick="sendViaMailClient()">📤 In Mail öffnen</button>
+        </div>
+        
+        <div style="margin-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <button class="btn btn-sm btn-secondary" onclick="markSelectedLeadStatus('Emailed')">Als "Gesendet" markieren</button>
+          <button class="btn btn-sm btn-success" onclick="markSelectedLeadStatus('Won')">🎉 Als "Gewonnen" markieren</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Lead Modal -->
+  <div class="modal-backdrop" id="addModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 style="font-size: 18px;">➕ Neuen lokalen Lead eintragen</h3>
+        <button class="close-btn" onclick="closeAddModal()">&times;</button>
+      </div>
+      <form onsubmit="handleSaveLead(event)">
+        <div class="form-group">
+          <label>Firmenname *</label>
+          <input type="text" id="mCompany" required placeholder="z.B. Schmidt Sanitär & Heizung">
+        </div>
+        <div class="form-group">
+          <label>Ansprechpartner / Inhaber</label>
+          <input type="text" id="mOwner" placeholder="z.B. Herr Peter Schmidt">
+        </div>
+        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div>
+            <label>Branche</label>
+            <input type="text" id="mNiche" placeholder="z.B. Sanitär / Dachdecker">
+          </div>
+          <div>
+            <label>Stadt</label>
+            <input type="text" id="mCity" placeholder="z.B. Dortmund">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-Mail-Adresse *</label>
+          <input type="email" id="mEmail" required placeholder="info@firma-schmidt.de">
+        </div>
+        <div class="form-group">
+          <label>Telefon / Mobil</label>
+          <input type="text" id="mPhone" placeholder="0151 / 12345678">
+        </div>
+        <div class="form-group">
+          <label>Aktuelle Website (oder Notiz)</label>
+          <input type="text" id="mNotes" placeholder="z.B. www.firma-schmidt.de (nicht mobiloptimiert)">
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Abbrechen</button>
+          <button type="submit" class="btn">Lead speichern</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Initial Seed Data for immediate testing
+    const defaultLeads = [
+  {
+    "id": "1",
+    "company": "Winterbauer GmbH",
+    "owner": "Herr Sebastian Winterbauer",
+    "niche": "Dachdecker & Spengler",
+    "city": "Heidelberg",
+    "email": "info@winterbauer.de",
+    "phone": "06221 / 739260",
+    "notes": "Dachdeckermeisterbetrieb Heidelberg",
+    "status": "Discovered"
+  },
+  {
+    "id": "2",
+    "company": "Holschuh Bedachungen GmbH",
+    "owner": "Frau Christin Holschuh",
+    "niche": "Dachdecker",
+    "city": "Heidelberg",
+    "email": "holschuh-gmbh@t-online.de",
+    "phone": "06221 / 373755",
+    "notes": "Tullastr., Heidelberg",
+    "status": "Discovered"
+  },
+  {
+    "id": "3",
+    "company": "Fehl Heizung Sanitär",
+    "owner": "Herr Manuel Fehl",
+    "niche": "Sanitär & Heizung",
+    "city": "Mannheim",
+    "email": "info@fehl-heizung-sanitaer.de",
+    "phone": "0621 / 7249150",
+    "notes": "Kamenzerstraße, Mannheim",
+    "status": "Discovered"
+  },
+  {
+    "id": "4",
+    "company": "Wojtischek Sanitär - Heizung",
+    "owner": "Herr Tobias Lanzendorfer",
+    "niche": "Sanitär & Heizungsbau",
+    "city": "Mannheim",
+    "email": "firma.wojtischek@gmail.com",
+    "phone": "0621 / 152648",
+    "notes": "B7 8, Mannheim",
+    "status": "Discovered"
+  },
+  {
+    "id": "5",
+    "company": "Kretz Sanitär und Heizung GmbH",
+    "owner": "Herr Peter Kretz",
+    "niche": "Sanitär & Haustechnik",
+    "city": "Mannheim",
+    "email": "info@kretz-haustechnik.de",
+    "phone": "0621 / 703081",
+    "notes": "Markircher Str., Mannheim",
+    "status": "Discovered"
+  },
+  {
+    "id": "6",
+    "company": "Thomas Koolen Bedachungen",
+    "owner": "Herr Thomas Koolen",
+    "niche": "Dachdecker",
+    "city": "Aachen",
+    "email": "info@koolen-dach.de",
+    "phone": "0241 / 6088880",
+    "notes": "Eynattener Str., Aachen",
+    "status": "Discovered"
+  },
+  {
+    "id": "7",
+    "company": "Michael Leunert Bedachungen",
+    "owner": "Herr Michael Rene Leunert",
+    "niche": "Dachdecker",
+    "city": "Aachen",
+    "email": "buero@leunert-bedachungen.de",
+    "phone": "0241 / 71112",
+    "notes": "Steppenbergallee, Aachen",
+    "status": "Discovered"
+  },
+  {
+    "id": "8",
+    "company": "Mismahl Sanitär- und Heizungstechnik",
+    "owner": "Herr Karlheinz Mismahl",
+    "niche": "Sanitär & Heizung",
+    "city": "Duisburg",
+    "email": "info@mismahl.de",
+    "phone": "0203 / 371071",
+    "notes": "Königsberger Allee, Duisburg",
+    "status": "Discovered"
+  },
+  {
+    "id": "9",
+    "company": "Sanitär- und Heizungstechnik Rüsen",
+    "owner": "Herr Fabian Rüsen",
+    "niche": "Sanitär & Heizung",
+    "city": "Duisburg",
+    "email": "firma.ruesen@online.de",
+    "phone": "0203 / 444455",
+    "notes": "Von-Der-Mark-Str., Duisburg",
+    "status": "Discovered"
+  },
+  {
+    "id": "10",
+    "company": "Stefan Eckers Sanitär - Heizung",
+    "owner": "Herr Stefan Eckers",
+    "niche": "Sanitär & Heizung",
+    "city": "Mönchengladbach",
+    "email": "info@eckers-sanitaer-heizung.de",
+    "phone": "02161 / 582450",
+    "notes": "Mennrathschmidt, Mönchengladbach",
+    "status": "Discovered"
+  },
+  {
+    "id": "11",
+    "company": "RL Bad-Heizung-Sanitär GmbH",
+    "owner": "Herr Rustenis Luckus",
+    "niche": "Sanitär & Badsanierung",
+    "city": "Mönchengladbach",
+    "email": "info@rl-bad.de",
+    "phone": "02161 / 462280",
+    "notes": "Künkelstraße, Mönchengladbach",
+    "status": "Discovered"
+  },
+  {
+    "id": "12",
+    "company": "Bräunig Dächer GmbH",
+    "owner": "Herr Marc Bräunig",
+    "niche": "Dachdecker & Zimmerei",
+    "city": "Ludwigshafen",
+    "email": "info@braeunig-daecher.de",
+    "phone": "0621 / 572210",
+    "notes": "Ludwigshafen am Rhein",
+    "status": "Discovered"
+  },
+  {
+    "id": "13",
+    "company": "Hajok Wärme + Wasser GmbH",
+    "owner": "Frau Alice Demessier",
+    "niche": "Sanitär & Heizungstechnik",
+    "city": "Ludwigshafen",
+    "email": "info@hajok.de",
+    "phone": "0621 / 512051",
+    "notes": "Ludwigshafen am Rhein",
+    "status": "Discovered"
+  },
+  {
+    "id": "14",
+    "company": "Peter Werner Sanitär GmbH",
+    "owner": "Herr Peter Werner",
+    "niche": "Sanitär & Bäder",
+    "city": "Ludwigshafen",
+    "email": "info@pw-sanitaer.de",
+    "phone": "0621 / 522030",
+    "notes": "Ludwigshafen",
+    "status": "Discovered"
+  }
+];
+
+    let leads = JSON.parse(localStorage.getItem('agency_leads')) || defaultLeads;
+    let selectedLeadId = leads[0]?.id || null;
+
+    function saveLeads() {
+      localStorage.setItem('agency_leads', JSON.stringify(leads));
+      render();
+    }
+
+    function render() {
+      renderMetrics();
+      renderTable();
+      renderLeadSelect();
+      generateEmail();
+    }
+
+    function renderMetrics() {
+      document.getElementById('totalLeads').innerText = leads.length;
+      const emailed = leads.filter(l => l.status === 'Emailed').length;
+      const replied = leads.filter(l => l.status === 'Replied').length;
+      const won = leads.filter(l => l.status === 'Won').length;
+      
+      document.getElementById('totalEmailed').innerText = emailed;
+      document.getElementById('totalReplies').innerText = replied;
+      document.getElementById('totalWon').innerText = won;
+      document.getElementById('pipelineVal').innerText = (won * 650) + ' €';
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('leadsTableBody');
+      tbody.innerHTML = '';
+
+      leads.forEach(lead => {
+        const tr = document.createElement('tr');
+        tr.style.cursor = 'pointer';
+        tr.onclick = (e) => {
+          if (!e.target.closest('select') && !e.target.closest('button')) {
+            selectedLeadId = lead.id;
+            document.getElementById('selectedLeadSelect').value = lead.id;
+            generateEmail();
+          }
+        };
+
+        tr.innerHTML = `
+          <td>
+            <strong>${lead.company}</strong><br>
+            <span style="font-size: 12px; color: var(--text-muted);">${lead.owner || 'Inhaber'}</span>
+          </td>
+          <td>
+            ${lead.niche}<br>
+            <span style="font-size: 12px; color: var(--text-muted);">📍 ${lead.city}</span>
+          </td>
+          <td>
+            <span style="font-size: 13px;">${lead.email}</span><br>
+            <span style="font-size: 12px; color: var(--text-muted);">${lead.phone || ''}</span>
+          </td>
+          <td>
+            <select onchange="updateLeadStatus('${lead.id}', this.value)" style="padding: 4px 8px; font-size: 12px;">
+              <option value="Discovered" ${lead.status === 'Discovered' ? 'selected' : ''}>🔍 Discovered</option>
+              <option value="Emailed" ${lead.status === 'Emailed' ? 'selected' : ''}>📤 Emailed</option>
+              <option value="Replied" ${lead.status === 'Replied' ? 'selected' : ''}>💬 Replied</option>
+              <option value="Won" ${lead.status === 'Won' ? 'selected' : ''}>🎉 Won</option>
+              <option value="Lost" ${lead.status === 'Lost' ? 'selected' : ''}>❌ Lost</option>
+            </select>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-secondary" onclick="deleteLead('${lead.id}', event)">🗑️</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderLeadSelect() {
+      const select = document.getElementById('selectedLeadSelect');
+      select.innerHTML = '';
+      leads.forEach(l => {
+        const opt = document.createElement('option');
+        opt.value = l.id;
+        opt.innerText = `${l.company} (${l.niche}) - ${l.city}`;
+        if (l.id === selectedLeadId) opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+
+    function loadSelectedLead() {
+      selectedLeadId = document.getElementById('selectedLeadSelect').value;
+      generateEmail();
+    }
+
+    function generateEmail() {
+      const lead = leads.find(l => l.id === selectedLeadId) || leads[0];
+      if (!lead) return;
+
+      const tpl = document.getElementById('templateSelect').value;
+      let subject = '';
+      let body = '';
+
+      const ownerSalutation = lead.owner ? (lead.owner.startsWith('Herr') || lead.owner.startsWith('Frau') ? lead.owner : `Herr/Frau ${lead.owner}`) : 'Damen und Herren';
+
+      if (tpl === 'mockup_de') {
+        subject = `Kurze Frage zu Ihrem Webauftritt / ${lead.company}`;
+        body = `Hallo ${ownerSalutation},
+
+ich bin bei der Google-Suche nach zuverlässigen Betrieben im Bereich ${lead.niche} in ${lead.city} auf ${lead.company} aufmerksam geworden.
+
+Mir ist aufgefallen, dass Ihre aktuelle Website auf Smartphones noch nicht optimal bedienbar ist und Interessenten kein direkter 1-Klick-Anrufbutton zur Verfügung steht. Dadurch gehen Ihnen erfahrungsgemäß jeden Monat wertvolle Kundenanfragen verloren.
+
+Ich habe mich darauf spezialisiert, Betrieben hier in der Region moderne, blitzschnelle Websites zu erstellen, die auf dem Smartphone perfekt funktionieren und sofort mehr Kundenanrufe bringen.
+
+Ich habe unverbindlich einen ersten Vorschau-Entwurf für ${lead.company} vorbereitet. Wäre es in Ordnung, wenn ich Ihnen dazu einen kurzen 60-Sekunden-Link zusende?
+
+Viele Grüße aus ${lead.city},
+[Ihr Name]
+[Ihre Telefonnummer]
+[Link zu Ihrer Agentur/Portfolio]`;
+      } else if (tpl === 'no_website_de') {
+        subject = `Tolle Google-Bewertungen für ${lead.company} – kurze Frage zur Website`;
+        body = `Hallo ${ownerSalutation},
+
+Glückwunsch zu Ihren hervorragenden Bewertungen für ${lead.company} auf Google Maps!
+
+Beim Durchsehen Ihres Profils ist mir aufgefallen, dass Sie aktuell noch gar keine eigene Website verlinkt haben. Viele Kunden in ${lead.city} möchten sich vor einem Anruf kurz über Leistungen, Referenzen oder Öffnungszeiten informieren – und springen sonst leider zum nächsten Betrieb ab.
+
+Wir bauen für Betriebe in ${lead.city} schlüsselfertige, moderne Websites innerhalb von 3 Tagen – komplett ohne Zeitaufwand für Sie (Texte, Bilder und Google-Optimierung übernehmen wir).
+
+Das Ganze gibt es schon ab einem unkomplizierten monatlichen Festpreis ohne teure Agenturverträge.
+
+Hätten Sie diese Woche Zeit für ein kurzes 5-Minuten-Telefonat, ob das für Sie interessant ist?
+
+Beste Grüße,
+[Ihr Name]
+[Ihre Telefonnummer]`;
+      } else if (tpl === 'followup_de') {
+        subject = `Re: Kurze Frage zu Ihrem Webauftritt / ${lead.company}`;
+        body = `Hallo ${ownerSalutation},
+
+ich wollte mich nur kurz erkundigen, ob meine letzte Nachricht untergegangen ist? Ich weiß, wie voll der Arbeitsalltag im Betrieb oft ist.
+
+Falls Sie Interesse haben, wie eine moderne, mobiloptimierte Website für ${lead.company} aussehen könnte, die automatisch neue Kundenanfragen bringt, lassen Sie es mich einfach kurz wissen.
+
+Falls aktuell kein Bedarf besteht, reicht ein kurzes "Nein danke" – dann belästige ich Sie natürlich nicht weiter.
+
+Beste Grüße,
+[Ihr Name]`;
+      } else if (tpl === 'breakup_de') {
+        subject = `Kurzes Update zu ${lead.company}`;
+        body = `Hallo ${ownerSalutation},
+
+ich gehe davon aus, dass ein neuer Webauftritt aktuell keine Priorität für ${lead.company} hat – was völlig verständlich ist!
+
+Ich schließe Ihre Akte hiermit erst einmal ab, um Ihr Postfach nicht zu belasten. Falls Sie zu einem späteren Zeitpunkt Unterstützung benötigen, speichern Sie meine Kontaktdaten gerne ab.
+
+Ich wünsche Ihnen und Ihrem Team weiterhin viel Erfolg in ${lead.city}!
+
+Beste Grüße,
+[Ihr Name]
+[Telefonnummer]`;
+      } else if (tpl === 'mockup_en') {
+        subject = `Quick question regarding ${lead.company}'s website`;
+        body = `Hi ${lead.owner || 'there'},
+
+I came across ${lead.company} while looking for reputable ${lead.niche} services in ${lead.city}.
+
+I noticed your website isn't fully responsive on mobile devices, and there is no direct tap-to-call button. In our area, over 70% of local customers search on smartphones, so this might be costing you inbound leads every week.
+
+I run a local web design studio in ${lead.city} helping businesses convert online visitors into phone calls and bookings.
+
+I actually put together a quick mockup concept for ${lead.company}. Would you be open to a 60-second preview link? Zero obligation.
+
+Best regards,
+[Your Name]
+[Phone Number]`;
+      }
+
+      document.getElementById('emailSubject').value = subject;
+      document.getElementById('emailBodyPreview').innerText = body;
+    }
+
+    function copyEmailToClipboard() {
+      const body = document.getElementById('emailBodyPreview').innerText;
+      navigator.clipboard.writeText(body).then(() => {
+        alert('✅ E-Mail-Text in die Zwischenablage kopiert!');
+      });
+    }
+
+    function sendViaMailClient() {
+      const lead = leads.find(l => l.id === selectedLeadId);
+      if (!lead) return;
+      const subject = encodeURIComponent(document.getElementById('emailSubject').value);
+      const body = encodeURIComponent(document.getElementById('emailBodyPreview').innerText);
+      window.location.href = `mailto:${lead.email}?subject=${subject}&body=${body}`;
+    }
+
+    function updateLeadStatus(id, newStatus) {
+      const lead = leads.find(l => l.id === id);
+      if (lead) {
+        lead.status = newStatus;
+        saveLeads();
+      }
+    }
+
+    function markSelectedLeadStatus(status) {
+      if (!selectedLeadId) return;
+      updateLeadStatus(selectedLeadId, status);
+    }
+
+    function deleteLead(id, event) {
+      event.stopPropagation();
+      if (confirm('Diesen Lead wirklich löschen?')) {
+        leads = leads.filter(l => l.id !== id);
+        if (selectedLeadId === id) selectedLeadId = leads[0]?.id || null;
+        saveLeads();
+      }
+    }
+
+    function openAddModal() {
+      document.getElementById('addModal').style.display = 'flex';
+    }
+
+    function closeAddModal() {
+      document.getElementById('addModal').style.display = 'none';
+    }
+
+    function handleSaveLead(e) {
+      e.preventDefault();
+      const newLead = {
+        id: Date.now().toString(),
+        company: document.getElementById('mCompany').value,
+        owner: document.getElementById('mOwner').value,
+        niche: document.getElementById('mNiche').value,
+        city: document.getElementById('mCity').value,
+        email: document.getElementById('mEmail').value,
+        phone: document.getElementById('mPhone').value,
+        notes: document.getElementById('mNotes').value,
+        status: 'Discovered'
+      };
+      leads.unshift(newLead);
+      selectedLeadId = newLead.id;
+      saveLeads();
+      closeAddModal();
+      e.target.reset();
+    }
+
+    function exportData() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(leads, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `agency_leads_backup_${new Date().toISOString().slice(0,10)}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
