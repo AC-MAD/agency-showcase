@@ -251,163 +251,322 @@
   <script>
     // Initial Seed Data for immediate testing
     const defaultLeads = [
-  {
-    "id": "1",
-    "company": "Winterbauer GmbH",
-    "owner": "Herr Sebastian Winterbauer",
-    "niche": "Dachdecker & Spengler",
-    "city": "Heidelberg",
-    "email": "info@winterbauer.de",
-    "phone": "06221 / 739260",
-    "notes": "Dachdeckermeisterbetrieb Heidelberg",
-    "status": "Discovered"
-  },
-  {
-    "id": "2",
-    "company": "Holschuh Bedachungen GmbH",
-    "owner": "Frau Christin Holschuh",
-    "niche": "Dachdecker",
-    "city": "Heidelberg",
-    "email": "holschuh-gmbh@t-online.de",
-    "phone": "06221 / 373755",
-    "notes": "Tullastr., Heidelberg",
-    "status": "Discovered"
-  },
-  {
-    "id": "3",
-    "company": "Fehl Heizung Sanitär",
-    "owner": "Herr Manuel Fehl",
-    "niche": "Sanitär & Heizung",
-    "city": "Mannheim",
-    "email": "info@fehl-heizung-sanitaer.de",
-    "phone": "0621 / 7249150",
-    "notes": "Kamenzerstraße, Mannheim",
-    "status": "Discovered"
-  },
-  {
-    "id": "4",
-    "company": "Wojtischek Sanitär - Heizung",
-    "owner": "Herr Tobias Lanzendorfer",
-    "niche": "Sanitär & Heizungsbau",
-    "city": "Mannheim",
-    "email": "firma.wojtischek@gmail.com",
-    "phone": "0621 / 152648",
-    "notes": "B7 8, Mannheim",
-    "status": "Discovered"
-  },
-  {
-    "id": "5",
-    "company": "Kretz Sanitär und Heizung GmbH",
-    "owner": "Herr Peter Kretz",
-    "niche": "Sanitär & Haustechnik",
-    "city": "Mannheim",
-    "email": "info@kretz-haustechnik.de",
-    "phone": "0621 / 703081",
-    "notes": "Markircher Str., Mannheim",
-    "status": "Discovered"
-  },
-  {
-    "id": "6",
-    "company": "Thomas Koolen Bedachungen",
-    "owner": "Herr Thomas Koolen",
-    "niche": "Dachdecker",
-    "city": "Aachen",
-    "email": "info@koolen-dach.de",
-    "phone": "0241 / 6088880",
-    "notes": "Eynattener Str., Aachen",
-    "status": "Discovered"
-  },
-  {
-    "id": "7",
-    "company": "Michael Leunert Bedachungen",
-    "owner": "Herr Michael Rene Leunert",
-    "niche": "Dachdecker",
-    "city": "Aachen",
-    "email": "buero@leunert-bedachungen.de",
-    "phone": "0241 / 71112",
-    "notes": "Steppenbergallee, Aachen",
-    "status": "Discovered"
-  },
-  {
-    "id": "8",
-    "company": "Mismahl Sanitär- und Heizungstechnik",
-    "owner": "Herr Karlheinz Mismahl",
-    "niche": "Sanitär & Heizung",
-    "city": "Duisburg",
-    "email": "info@mismahl.de",
-    "phone": "0203 / 371071",
-    "notes": "Königsberger Allee, Duisburg",
-    "status": "Discovered"
-  },
-  {
-    "id": "9",
-    "company": "Sanitär- und Heizungstechnik Rüsen",
-    "owner": "Herr Fabian Rüsen",
-    "niche": "Sanitär & Heizung",
-    "city": "Duisburg",
-    "email": "firma.ruesen@online.de",
-    "phone": "0203 / 444455",
-    "notes": "Von-Der-Mark-Str., Duisburg",
-    "status": "Discovered"
-  },
-  {
-    "id": "10",
-    "company": "Stefan Eckers Sanitär - Heizung",
-    "owner": "Herr Stefan Eckers",
-    "niche": "Sanitär & Heizung",
-    "city": "Mönchengladbach",
-    "email": "info@eckers-sanitaer-heizung.de",
-    "phone": "02161 / 582450",
-    "notes": "Mennrathschmidt, Mönchengladbach",
-    "status": "Discovered"
-  },
-  {
-    "id": "11",
-    "company": "RL Bad-Heizung-Sanitär GmbH",
-    "owner": "Herr Rustenis Luckus",
-    "niche": "Sanitär & Badsanierung",
-    "city": "Mönchengladbach",
-    "email": "info@rl-bad.de",
-    "phone": "02161 / 462280",
-    "notes": "Künkelstraße, Mönchengladbach",
-    "status": "Discovered"
-  },
-  {
-    "id": "12",
-    "company": "Bräunig Dächer GmbH",
-    "owner": "Herr Marc Bräunig",
-    "niche": "Dachdecker & Zimmerei",
-    "city": "Ludwigshafen",
-    "email": "info@braeunig-daecher.de",
-    "phone": "0621 / 572210",
-    "notes": "Ludwigshafen am Rhein",
-    "status": "Discovered"
-  },
-  {
-    "id": "13",
-    "company": "Hajok Wärme + Wasser GmbH",
-    "owner": "Frau Alice Demessier",
-    "niche": "Sanitär & Heizungstechnik",
-    "city": "Ludwigshafen",
-    "email": "info@hajok.de",
-    "phone": "0621 / 512051",
-    "notes": "Ludwigshafen am Rhein",
-    "status": "Discovered"
-  },
-  {
-    "id": "14",
-    "company": "Peter Werner Sanitär GmbH",
-    "owner": "Herr Peter Werner",
-    "niche": "Sanitär & Bäder",
-    "city": "Ludwigshafen",
-    "email": "info@pw-sanitaer.de",
-    "phone": "0621 / 522030",
-    "notes": "Ludwigshafen",
-    "status": "Discovered"
-  }
+    {
+        "id":  "1",
+        "company":  "Winterbauer GmbH",
+        "owner":  "Herr Sebastian Winterbauer",
+        "niche":  "Dachdecker \u0026 Spengler",
+        "city":  "Heidelberg",
+        "email":  "info@winterbauer.de",
+        "phone":  "06221 / 739260",
+        "notes":  "Dachdeckermeisterbetrieb Heidelberg",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:56:39Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:56:39Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / Winterbauer GmbH",
+                                 "status":  "Sent"
+                             }
+                         ]
+    },
+    {
+        "id":  "2",
+        "company":  "Holschuh Bedachungen GmbH",
+        "owner":  "Frau Christin Holschuh",
+        "niche":  "Dachdecker",
+        "city":  "Heidelberg",
+        "email":  "holschuh-gmbh@t-online.de",
+        "phone":  "06221 / 373755",
+        "notes":  "Tullastr., Heidelberg",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:56:42Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:56:42Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / Holschuh Bedachungen GmbH",
+                                 "status":  "Sent"
+                             }
+                         ]
+    },
+    {
+        "id":  "3",
+        "company":  "Fehl Heizung Sanitär",
+        "owner":  "Herr Manuel Fehl",
+        "niche":  "Sanitär \u0026 Heizung",
+        "city":  "Mannheim",
+        "email":  "info@fehl-heizung-sanitaer.de",
+        "phone":  "0621 / 7249150",
+        "notes":  "Kamenzerstraße, Mannheim",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:56:46Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:56:46Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / Fehl Heizung Sanitär",
+                                 "status":  "Sent"
+                             }
+                         ]
+    },
+    {
+        "id":  "4",
+        "company":  "Wojtischek Sanitär - Heizung",
+        "owner":  "Herr Tobias Lanzendorfer",
+        "niche":  "Sanitär \u0026 Heizungsbau",
+        "city":  "Mannheim",
+        "email":  "firma.wojtischek@gmail.com",
+        "phone":  "0621 / 152648",
+        "notes":  "B7 8, Mannheim",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:56:49Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:56:49Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / Wojtischek Sanitär - Heizung",
+                                 "status":  "Sent"
+                             }
+                         ]
+    },
+    {
+        "id":  "5",
+        "company":  "Kretz Sanitär und Heizung GmbH",
+        "owner":  "Herr Peter Kretz",
+        "niche":  "Sanitär \u0026 Haustechnik",
+        "city":  "Mannheim",
+        "email":  "info@kretz-haustechnik.de",
+        "phone":  "0621 / 703081",
+        "notes":  "Markircher Str., Mannheim",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:56:52Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:56:52Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / Kretz Sanitär und Heizung GmbH",
+                                 "status":  "Sent"
+                             }
+                         ]
+    },
+    {
+        "id":  "6",
+        "company":  "Thomas Koolen Bedachungen",
+        "owner":  "Herr Thomas Koolen",
+        "niche":  "Dachdecker",
+        "city":  "Aachen",
+        "email":  "info@koolen-dach.de",
+        "phone":  "0241 / 6088880",
+        "notes":  "Eynattener Str., Aachen",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:56:55Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:56:55Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / Thomas Koolen Bedachungen",
+                                 "status":  "Sent"
+                             }
+                         ]
+    },
+    {
+        "id":  "7",
+        "company":  "Michael Leunert Bedachungen",
+        "owner":  "Herr Michael Rene Leunert",
+        "niche":  "Dachdecker",
+        "city":  "Aachen",
+        "email":  "buero@leunert-bedachungen.de",
+        "phone":  "0241 / 71112",
+        "notes":  "Steppenbergallee, Aachen",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:56:58Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:56:58Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / Michael Leunert Bedachungen",
+                                 "status":  "Sent"
+                             }
+                         ]
+    },
+    {
+        "id":  "8",
+        "company":  "Mismahl Sanitär- und Heizungstechnik",
+        "owner":  "Herr Karlheinz Mismahl",
+        "niche":  "Sanitär \u0026 Heizung",
+        "city":  "Duisburg",
+        "email":  "info@mismahl.de",
+        "phone":  "0203 / 371071",
+        "notes":  "Königsberger Allee, Duisburg",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:57:01Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:57:01Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / Mismahl Sanitär- und Heizungstechnik",
+                                 "status":  "Sent"
+                             }
+                         ]
+    },
+    {
+        "id":  "9",
+        "company":  "Sanitär- und Heizungstechnik Rüsen",
+        "owner":  "Herr Fabian Rüsen",
+        "niche":  "Sanitär \u0026 Heizung",
+        "city":  "Duisburg",
+        "email":  "firma.ruesen@online.de",
+        "phone":  "0203 / 444455",
+        "notes":  "Von-Der-Mark-Str., Duisburg",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:57:04Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:57:04Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / Sanitär- und Heizungstechnik Rüsen",
+                                 "status":  "Sent"
+                             }
+                         ]
+    },
+    {
+        "id":  "10",
+        "company":  "Stefan Eckers Sanitär - Heizung",
+        "owner":  "Herr Stefan Eckers",
+        "niche":  "Sanitär \u0026 Heizung",
+        "city":  "Mönchengladbach",
+        "email":  "info@eckers-sanitaer-heizung.de",
+        "phone":  "02161 / 582450",
+        "notes":  "Mennrathschmidt, Mönchengladbach",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:57:07Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:57:07Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / Stefan Eckers Sanitär - Heizung",
+                                 "status":  "Sent"
+                             }
+                         ]
+    },
+    {
+        "id":  "11",
+        "company":  "RL Bad-Heizung-Sanitär GmbH",
+        "owner":  "Herr Rustenis Luckus",
+        "niche":  "Sanitär \u0026 Badsanierung",
+        "city":  "Mönchengladbach",
+        "email":  "info@rl-bad.de",
+        "phone":  "02161 / 462280",
+        "notes":  "Künkelstraße, Mönchengladbach",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:57:10Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:57:10Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / RL Bad-Heizung-Sanitär GmbH",
+                                 "status":  "Sent"
+                             }
+                         ]
+    },
+    {
+        "id":  "12",
+        "company":  "Bräunig Dächer GmbH",
+        "owner":  "Herr Marc Bräunig",
+        "niche":  "Dachdecker \u0026 Zimmerei",
+        "city":  "Ludwigshafen",
+        "email":  "info@braeunig-daecher.de",
+        "phone":  "0621 / 572210",
+        "notes":  "Ludwigshafen am Rhein",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:57:13Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:57:13Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / Bräunig Dächer GmbH",
+                                 "status":  "Sent"
+                             }
+                         ]
+    },
+    {
+        "id":  "13",
+        "company":  "Hajok Wärme + Wasser GmbH",
+        "owner":  "Frau Alice Demessier",
+        "niche":  "Sanitär \u0026 Heizungstechnik",
+        "city":  "Ludwigshafen",
+        "email":  "info@hajok.de",
+        "phone":  "0621 / 512051",
+        "notes":  "Ludwigshafen am Rhein",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:57:16Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:57:16Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / Hajok Wärme + Wasser GmbH",
+                                 "status":  "Sent"
+                             }
+                         ]
+    },
+    {
+        "id":  "14",
+        "company":  "Peter Werner Sanitär GmbH",
+        "owner":  "Herr Peter Werner",
+        "niche":  "Sanitär \u0026 Bäder",
+        "city":  "Ludwigshafen",
+        "email":  "info@pw-sanitaer.de",
+        "phone":  "0621 / 522030",
+        "notes":  "Ludwigshafen",
+        "status":  "Emailed",
+        "sent_at":  "2026-11-17T19:57:19Z",
+        "outreach_log":  [
+                             {
+                                 "channel":  "Gmail",
+                                 "sender":  "gonioching@gmail.com",
+                                 "timestamp":  "2026-11-17T19:57:19Z",
+                                 "template":  "mockup_de",
+                                 "subject":  "Kurze Frage zu Ihrem Webauftritt / Peter Werner Sanitär GmbH",
+                                 "status":  "Sent"
+                             }
+                         ]
+    }
 ];
 
-    let leads = JSON.parse(localStorage.getItem('agency_leads')) || defaultLeads;
+    let stored = localStorage.getItem('agency_leads');
+    let leads = stored ? JSON.parse(stored) : defaultLeads;
+    if (leads.length > 0 && leads.every(l => l.status === 'Discovered') && defaultLeads.some(l => l.status === 'Emailed')) {
+      leads = defaultLeads;
+      localStorage.setItem('agency_leads', JSON.stringify(leads));
+    }
     let selectedLeadId = leads[0]?.id || null;
 
     function saveLeads() {
