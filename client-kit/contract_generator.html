@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vertrags-Generator | LocalWeb Studio</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --dark: #0f172a;
+      --border: #cbd5e1;
+      --bg: #f8fafc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+    body { background-color: var(--bg); color: #1e293b; padding: 24px; line-height: 1.6; }
+
+    .no-print-bar { max-width: 900px; margin: 0 auto 24px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid var(--border); }
+    .no-print-bar h2 { font-size: 20px; font-weight: 800; margin-bottom: 16px; color: var(--dark); display: flex; align-items: center; justify-content: space-between; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 16px; }
+    .input-group label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; color: #64748b; margin-bottom: 4px; }
+    .input-group input, .input-group select { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
+    .btn-print { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-print:hover { background: #1d4ed8; }
+
+    /* Printable Contract Page */
+    .page { max-width: 820px; margin: 0 auto; background: white; padding: 48px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; font-size: 14px; }
+    .header { border-bottom: 2px solid #0f172a; padding-bottom: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .header h1 { font-size: 24px; font-weight: 900; color: #0f172a; }
+    .header .subtitle { font-size: 13px; color: #64748b; font-weight: 600; }
+    .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 24px; border: 1px solid #e2e8f0; }
+    .party h3 { font-size: 12px; text-transform: uppercase; color: #64748b; margin-bottom: 6px; font-weight: 800; }
+    .section-title { font-size: 15px; font-weight: 800; color: #0f172a; margin: 18px 0 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
+    ul { margin-left: 20px; margin-bottom: 12px; }
+    li { margin-bottom: 4px; }
+    .highlight-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 12px 16px; margin: 12px 0; font-size: 13px; }
+    .signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 48px; padding-top: 24px; }
+    .sig-line { border-top: 1px solid #0f172a; padding-top: 8px; font-size: 13px; color: #475569; }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .no-print-bar { display: none !important; }
+      .page { box-shadow: none; border: none; padding: 0; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <h2>
+      <span>⚡ Vertrags-Konfigurator</span>
+      <button class="btn-print" onclick="window.print()">🖨️ Vertrag drucken / Als PDF speichern</button>
+    </h2>
+    <div class="form-grid">
+      <div class="input-group">
+        <label>Kunden-Firma</label>
+        <input type="text" id="inCompany" value="Peter Werner Sanitär GmbH" oninput="updateContract()">
+      </div>
+      <div class="input-group">
+        <label>Inhaber / Ansprechpartner</label>
+        <input type="text" id="inOwner" value="Herr Peter Werner" oninput="updateContract()">
+      </div>
+      <div class="input-group">
+        <label>Anschrift (Straße & Nr.)</label>
+        <input type="text" id="inStreet" value="Musterstraße 12" oninput="updateContract()">
+      </div>
+      <div class="input-group">
+        <label>PLZ & Ort</label>
+        <input type="text" id="inCity" value="68161 Mannheim" oninput="updateContract()">
+      </div>
+      <div class="input-group">
+        <label>Vertragsmodell</label>
+        <select id="inPlan" onchange="updateContract()">
+          <option value="flatrate" selected>Rundum-Sorglos Flatrate (79 € / Monat - 0 € Setup)</option>
+          <option value="onetime">Einmaliger Festpreis (650 € einmalig)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="header">
+      <div>
+        <h1>Dienstleistungsvereinbarung</h1>
+        <div class="subtitle">Webdesign, technische Bereitstellung & Betreuung</div>
+      </div>
+      <div style="text-align: right; font-size: 13px; color: #64748b;">
+        Vertrags-Nr.: <strong id="docId">LW-2026-001</strong><br>
+        Datum: <strong id="docDate">18.11.2026</strong>
+      </div>
+    </div>
+
+    <div class="parties">
+      <div class="party">
+        <h3>Auftragnehmer</h3>
+        <strong>LocalWeb Studio</strong><br>
+        Inh. Ayoub Chouifi<br>
+        E-Mail: kontakt@localweb-studio.de<br>
+        Web: www.chouifi.com/agency-showcase/
+      </div>
+      <div class="party">
+        <h3>Auftraggeber (Kunde)</h3>
+        <strong id="outCompany">Peter Werner Sanitär GmbH</strong><br>
+        z.Hd. <span id="outOwner">Herr Peter Werner</span><br>
+        <span id="outAddress">Musterstraße 12, 68161 Mannheim</span>
+      </div>
+    </div>
+
+    <div class="section-title">§ 1 Vertragsgegenstand</div>
+    <p>Der Auftragnehmer erstellt und veröffentlicht für den Auftraggeber eine schlüsselfertige, moderne und mobiloptimierte Website für lokale Kundenanfragen. Der Leistungsumfang umfasst Konzeption, responsives Webdesign, Leistungsübersicht, Kontakt-/Anfrageformular, Google-Maps-Integration und DSGVO-konforme Impressums- und Datenschutzeinbindung.</p>
+
+    <div class="section-title">§ 2 Vereinbartes Vergütungsmodell</div>
+    <div id="planDisplay" class="highlight-box">
+      <strong>Gewähltes Modell: Rundum-Sorglos Flatrate</strong><br>
+      • Setup- & Erstellungskosten: <strong>0,00 €</strong><br>
+      • Monatliche Betreuungspauschale: <strong>79,00 €</strong> (netto)<br>
+      • Inklusive Leistungen: High-Speed Webhosting, SSL-Verschlüsselung, Domain-Verwaltung, monatliche Text- & Inhaltsänderungen sowie technischer Support.<br>
+      • Mindestlaufzeit: 12 Monate, danach jederzeit mit 30 Tagen Frist zum Monatsende kündbar.
+    </div>
+
+    <div class="section-title">§ 3 Fertigstellung & Bereitstellung</div>
+    <p>Der Auftragnehmer stellt den fertigen Website-Entwurf innerhalb von <strong>72 Stunden</strong> nach Bereitstellung der grundlegenden Unternehmensangaben (Logo, Fotos, Leistungsliste) zur Freigabe bereit. Nach Freigabe durch den Auftraggeber erfolgt die unmittelbare Live-Schaltung unter der Kundendomain.</p>
+
+    <div class="section-title">§ 4 Nutzungsrechte & Datenschutz</div>
+    <p>Der Auftraggeber erhält für die Dauer des Vertragsverhältnisses das uneingeschränkte, exklusive Recht zur Nutzung der Website für seinen geschäftlichen Auftritt. Alle verarbeiteten Daten werden streng nach den Vorgaben der europäischen DSGVO behandelt.</p>
+
+    <div class="signatures">
+      <div class="sig-line">
+        Ort, Datum: Mannheim, den <span id="sigDate">18.11.2026</span><br><br><br>
+        __________________________________________<br>
+        <strong>Unterschrift Auftraggeber</strong><br>
+        (<span id="sigClientName">Herr Peter Werner</span>)
+      </div>
+      <div class="sig-line">
+        Ort, Datum: Heidelberg, den <span id="sigDate2">18.11.2026</span><br><br><br>
+        __________________________________________<br>
+        <strong>Unterschrift Auftragnehmer</strong><br>
+        (LocalWeb Studio)
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateContract() {
+      const company = document.getElementById('inCompany').value;
+      const owner = document.getElementById('inOwner').value;
+      const street = document.getElementById('inStreet').value;
+      const city = document.getElementById('inCity').value;
+      const plan = document.getElementById('inPlan').value;
+
+      document.getElementById('outCompany').textContent = company;
+      document.getElementById('outOwner').textContent = owner;
+      document.getElementById('outAddress').textContent = `${street}, ${city}`;
+      document.getElementById('sigClientName').textContent = owner;
+
+      const planBox = document.getElementById('planDisplay');
+      if (plan === 'flatrate') {
+        planBox.innerHTML = `
+          <strong>Gewähltes Modell: Rundum-Sorglos Flatrate</strong><br>
+          • Setup- & Erstellungskosten: <strong>0,00 €</strong><br>
+          • Monatliche Betreuungspauschale: <strong>79,00 €</strong> (netto)<br>
+          • Inklusive Leistungen: High-Speed Webhosting, SSL-Verschlüsselung, Domain-Verwaltung, monatliche Text- & Inhaltsänderungen sowie technischer Support.<br>
+          • Mindestlaufzeit: 12 Monate, danach jederzeit mit 30 Tagen Frist zum Monatsende kündbar.
+        `;
+      } else {
+        planBox.innerHTML = `
+          <strong>Gewähltes Modell: Einmaliger Festpreis</strong><br>
+          • Einmaliges Gesamthonorar: <strong>650,00 €</strong> (netto)<br>
+          • Zahlungsweise: 50% Anzahlung bei Freigabe des Entwurfs, 50% nach vollständiger Abnahme und Livegang.<br>
+          • Inklusive: Vollständige Rechteübertragung, 14 Tage Launch-Support, Übergabe aller Code-Dateien.<br>
+          • Optionales Hosting & Wartung: 29,00 € / Monat (monatlich kündbar).
+        `;
+      }
+    }
+
+    // Set today's date
+    const today = new Date().toLocaleDateString('de-DE');
+    document.getElementById('docDate').textContent = today;
+    document.getElementById('sigDate').textContent = today;
+    document.getElementById('sigDate2').textContent = today;
+  </script>
+</body>
+</html>
