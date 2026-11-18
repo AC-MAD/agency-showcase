@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
@@ -800,6 +800,12 @@
       const n = (lead.niche || '').toLowerCase();
       if (n.includes('salon') || n.includes('friseur') || n.includes('kosmetik') || n.includes('beauty') || n.includes('haar') || n.includes('hair')) {
         return 'https://www.chouifi.com/agency-showcase/demos/salon/';
+      }
+      if (n.includes('gastro') || n.includes('restaurant') || n.includes('pizzeria') || n.includes('cafe') || n.includes('café') || n.includes('bistro') || n.includes('essen')) {
+        return 'https://www.chouifi.com/agency-showcase/demos/gastronomy/';
+      }
+      if (n.includes('arzt') || n.includes('praxis') || n.includes('therapie') || n.includes('gesundheit') || n.includes('zahnarzt') || n.includes('medizin')) {
+        return 'https://www.chouifi.com/agency-showcase/demos/praxis/';
       }
       return 'https://www.chouifi.com/agency-showcase/demos/craftsman/';
     }
