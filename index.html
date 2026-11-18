@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
@@ -361,6 +361,65 @@
       backdrop-filter: blur(10px); transition: all 0.2s;
     }
     .contact-chip:hover { background: var(--primary); transform: translateY(-2px); }
+
+    /* Direct Contact Form Styling */
+    .contact-section-wrap {
+      background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.45), rgba(15, 23, 42, 0.95));
+      border: 1px solid var(--border-highlight);
+      border-radius: 28px; padding: 56px 40px;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.6);
+      margin-bottom: 80px; position: relative; overflow: hidden;
+    }
+    .contact-form-grid {
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: flex-start;
+    }
+    .form-card {
+      background: rgba(11, 16, 29, 0.85); border: 1px solid var(--border);
+      border-radius: 20px; padding: 36px; backdrop-filter: blur(16px);
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
+    }
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-input-group { margin-bottom: 18px; }
+    .form-input-group label {
+      display: block; font-size: 13px; font-weight: 700; color: #cbd5e1; margin-bottom: 6px;
+    }
+    .form-input-group input, .form-input-group select, .form-input-group textarea {
+      width: 100%; background: rgba(3, 7, 18, 0.85); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 16px; color: #fff; font-size: 14px; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-input-group input:focus, .form-input-group select:focus, .form-input-group textarea:focus {
+      border-color: var(--cyan); box-shadow: 0 0 14px rgba(6, 182, 212, 0.25);
+    }
+    .submit-btn-direct {
+      width: 100%; padding: 16px; font-size: 16px; font-weight: 800; border-radius: 12px;
+      background: linear-gradient(135deg, #2563eb, #06b6d4); color: white; border: none;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+      box-shadow: 0 0 30px rgba(37, 99, 235, 0.5); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .submit-btn-direct:hover { transform: translateY(-2px); box-shadow: 0 0 45px rgba(6, 182, 212, 0.6); }
+
+    /* Floating Quick Request Widget */
+    .floating-widget-btn {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: linear-gradient(135deg, #2563eb, #06b6d4); color: white;
+      padding: 14px 22px; border-radius: 40px; font-weight: 800; font-size: 14px;
+      box-shadow: 0 8px 30px rgba(37, 99, 235, 0.5); cursor: pointer; border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; gap: 10px; transition: transform 0.2s;
+    }
+    .floating-widget-btn:hover { transform: scale(1.05); }
+
+    .floating-modal-drawer {
+      display: none; position: fixed; bottom: 84px; right: 24px; z-index: 9999;
+      width: 360px; max-width: calc(100vw - 32px); background: #0b1120;
+      border: 1px solid var(--border-highlight); border-radius: 20px;
+      padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); backdrop-filter: blur(20px);
+    }
+
+    @media (max-width: 900px) {
+      .contact-form-grid { grid-template-columns: 1fr; }
+      .form-row-2 { grid-template-columns: 1fr; }
+    }
 
     /* Footer */
     footer { border-top: 1px solid var(--border); padding: 40px 0; text-align: center; color: var(--text-muted); font-size: 13px; }
@@ -768,19 +827,128 @@
       </div>
     </div>
 
-    <!-- Final Call to Action -->
-    <section class="contact-hero" id="kontakt">
-      <h2>Bereit für mehr Kundenanfragen?</h2>
-      <p>Rufen Sie uns direkt an oder schreiben Sie uns eine kurze Nachricht. Wir analysieren Ihren aktuellen Auftritt kostenlos und unverbindlich.</p>
-      <div class="contact-links">
-        <a href="tel:015112345678" class="contact-chip">
-          📞 0151 / 1234 5678
-        </a>
-        <a href="mailto:kontakt@localweb-studio.de" class="contact-chip">
-          📧 kontakt@localweb-studio.de
-        </a>
+    <!-- In-Website Direct Contact System (Kein Mail-Programm noetig) -->
+    <section class="contact-section-wrap" id="kontakt">
+      <div class="contact-form-grid">
+        <div class="contact-info-col">
+          <span class="section-tag">Direktanfrage & 24h-Check</span>
+          <h2 style="font-family: 'Outfit'; font-size: 38px; font-weight: 900; color: #fff; line-height: 1.15; margin: 12px 0 16px;">
+            Starten Sie jetzt Ihren neuen Webauftritt.
+          </h2>
+          <p style="color: var(--text-muted); font-size: 16px; line-height: 1.6; margin-bottom: 28px;">
+            Nutzen Sie unser sicheres Direktformular – Sie müssen kein E-Mail-Programm öffnen. Tragen Sie einfach Ihre Daten ein und wir melden uns innerhalb von 60 Minuten mit einem maßgeschneiderten Konzept.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
+            <div style="display: flex; align-items: center; gap: 12px; font-size: 15px; color: #e2e8f0;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(34, 197, 94, 0.2); color: #22c55e; display: flex; align-items: center; justify-content: center; font-weight: 800;">✓</span>
+              100% kostenlos & unverbindlich
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; font-size: 15px; color: #e2e8f0;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(59, 130, 246, 0.2); color: #60a5fa; display: flex; align-items: center; justify-content: center; font-weight: 800;">✓</span>
+              Rückmeldung innerhalb von 60 Minuten garantiert
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; font-size: 15px; color: #e2e8f0;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(245, 158, 11, 0.2); color: #fbbf24; display: flex; align-items: center; justify-content: center; font-weight: 800;">✓</span>
+              Fertige Website in nur 72 Stunden online
+            </div>
+          </div>
+
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 20px; font-size: 14px;">
+            <div style="color: var(--text-muted); font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px;">Direkter Projektleiter</div>
+            <div style="font-weight: 800; color: #fff; font-size: 16px;">Ayoub Chouifi · LocalWeb Studio</div>
+            <div style="color: var(--cyan); margin-top: 4px;">E-Mail: ac28ayoub@gmail.com</div>
+          </div>
+        </div>
+
+        <div class="form-card" id="directFormWrap">
+          <form id="directContactForm" onsubmit="submitDirectContact(event)">
+            <h3 style="font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px;">Unverbindliche Direktanfrage</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 22px;">In 60 Sekunden ausgefüllt · Keine Vorabkosten</p>
+
+            <div class="form-row-2">
+              <div class="form-input-group">
+                <label>Ihr Vor- & Nachname *</label>
+                <input type="text" name="name" placeholder="z.B. Markus Schmidt" required>
+              </div>
+              <div class="form-input-group">
+                <label>Firmenname & Ort *</label>
+                <input type="text" name="company" placeholder="z.B. Schmidt Sanitär, Mannheim" required>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-input-group">
+                <label>Telefonnummer für Rückruf *</label>
+                <input type="tel" name="phone" placeholder="z.B. 0171 2345678" required>
+              </div>
+              <div class="form-input-group">
+                <label>E-Mail-Adresse *</label>
+                <input type="email" name="email" placeholder="name@betrieb.de" required>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-input-group">
+                <label>Ihre Branche *</label>
+                <select name="niche" required>
+                  <option value="Handwerk & Bau" selected>🔧 Handwerk, Sanitär & Dachdecker</option>
+                  <option value="Friseur & Salon">✂️ Friseur, Barbershop & Kosmetik</option>
+                  <option value="Gastronomie">🍝 Restaurant, Pizzeria & Café</option>
+                  <option value="Praxis & Gesundheit">🩺 Arztpraxis, Physio & Gesundheit</option>
+                  <option value="Sonstiges">🏢 Sonstige Dienstleistung</option>
+                </select>
+              </div>
+              <div class="form-input-group">
+                <label>Bevorzugtes Modell</label>
+                <select name="plan">
+                  <option value="Flatrate 79€/Mo" selected>Rundum-Sorglos Flatrate (0 € Setup, 79 €/Mo)</option>
+                  <option value="Festpreis 650€">Einmaliger Festpreis (650 € schluesselfertig)</option>
+                  <option value="Website-Analyse">Kostenlose Website-Analyse & Beratung</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-input-group">
+              <label>Nachricht oder aktuelle Website (optional)</label>
+              <textarea name="message" rows="3" placeholder="z.B. Wir brauchen einen 24h-Notdienst-Button und modernes Design..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn-direct">
+              🚀 Anfrage jetzt direkt absenden (Kostenlos)
+            </button>
+            <div style="text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 12px;">
+              🔒 Ihre Daten sind sicher. Keine Weitergabe an Dritte.
+            </div>
+          </form>
+        </div>
       </div>
     </section>
+
+    <!-- Floating 60-Second Quick Contact Drawer -->
+    <button class="floating-widget-btn" onclick="toggleQuickDrawer()">
+      💬 Express-Anfrage (60 Sek.)
+    </button>
+
+    <div class="floating-modal-drawer" id="quickDrawer">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <strong style="color: #fff; font-size: 15px;">⚡ Express-Rückruf anfordern</strong>
+        <span onclick="toggleQuickDrawer()" style="cursor: pointer; color: var(--text-muted); font-size: 20px; font-weight: bold;">&times;</span>
+      </div>
+      <form onsubmit="submitQuickDrawer(event)">
+        <div class="form-input-group" style="margin-bottom: 10px;">
+          <label style="font-size: 11px;">Name & Betrieb *</label>
+          <input type="text" name="quick_name" placeholder="z.B. Meier Bedachungen" required style="padding: 8px 12px; font-size: 13px;">
+        </div>
+        <div class="form-input-group" style="margin-bottom: 14px;">
+          <label style="font-size: 11px;">Ihre Telefonnummer *</label>
+          <input type="tel" name="quick_phone" placeholder="z.B. 0172 1234567" required style="padding: 8px 12px; font-size: 13px;">
+        </div>
+        <button type="submit" class="submit-btn-direct" style="padding: 10px; font-size: 13px;">
+          📞 Rückruf anfordern
+        </button>
+      </form>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -992,6 +1160,104 @@
 
     initCanvas();
     animateParticles();
+
+    // Toggle Floating Quick Drawer
+    function toggleQuickDrawer() {
+      const drawer = document.getElementById('quickDrawer');
+      drawer.style.display = (drawer.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // Direct Form Submission (In-Website Direct Contact Handler)
+    async function submitDirectContact(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '⏳ Wird sicher übertragen...';
+      btn.disabled = true;
+
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        await fetch('https://formsubmit.co/ajax/ac28ayoub@gmail.com', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            _subject: '⚡ Neue Website-Direktanfrage: ' + (data.company || data.name),
+            _cc: 'gonioching@gmail.com',
+            Name: data.name,
+            Firma: data.company || 'Nicht angegeben',
+            Telefon: data.phone,
+            Email: data.email,
+            Branche: data.niche || 'Handwerk',
+            Modell: data.plan || 'Flatrate 79€/Mo',
+            Nachricht: data.message || 'Keine Notiz'
+          })
+        });
+
+        // Store locally in CRM
+        const inquiries = JSON.parse(localStorage.getItem('local_inquiries') || '[]');
+        inquiries.push({ ...data, date: new Date().toISOString() });
+        localStorage.setItem('local_inquiries', JSON.stringify(inquiries));
+
+        // Show Success Badge on Website
+        document.getElementById('directFormWrap').innerHTML = 
+          <div style="text-align: center; padding: 48px 20px;">
+            <div style="width: 72px; height: 72px; background: rgba(34, 197, 94, 0.2); border: 2px solid #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 34px; color: #22c55e;">✓</div>
+            <h3 style="font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 12px;">Anfrage erfolgreich eingegangen!</h3>
+            <p style="color: #94a3b8; font-size: 16px; max-width: 450px; margin: 0 auto 24px; line-height: 1.6;">
+              Vielen Dank, <strong> + data.name + </strong>! Ihre Daten für <strong> + data.company + </strong> wurden direkt an unseren Projektleiter übermittelt.
+            </p>
+            <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 16px; font-size: 14px; color: #cbd5e1; max-width: 400px; margin: 0 auto;">
+              📞 Wir melden uns innerhalb von <strong>60 Minuten</strong> telefonisch unter <strong> + data.phone + </strong> bei Ihnen.
+            </div>
+          </div>
+        ;
+      } catch (err) {
+        alert('Vielen Dank! Ihre Anfrage ist eingegangen. Wir melden uns in Kürze bei Ihnen.');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    // Quick Drawer Submit
+    async function submitQuickDrawer(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = form.querySelector('button');
+      btn.innerHTML = '⏳ Senden...';
+      btn.disabled = true;
+
+      const name = form.quick_name.value;
+      const phone = form.quick_phone.value;
+
+      try {
+        await fetch('https://formsubmit.co/ajax/ac28ayoub@gmail.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: '🚨 Express-Rückrufwunsch: ' + name,
+            _cc: 'gonioching@gmail.com',
+            Name: name,
+            Telefon: phone,
+            Typ: '60-Sekunden Express Callback'
+          })
+        });
+
+        document.getElementById('quickDrawer').innerHTML = 
+          <div style="text-align: center; padding: 20px;">
+            <div style="font-size: 28px; color: #22c55e; margin-bottom: 8px;">✓</div>
+            <strong style="color: #fff; font-size: 15px;">Rückruf angefordert!</strong>
+            <p style="color: #94a3b8; font-size: 12px; margin-top: 6px;">Wir rufen Sie in Kürze unter  + phone +  an.</p>
+          </div>
+        ;
+      } catch (err) {
+        alert('Rückruf angefordert! Wir melden uns in Kürze.');
+      }
+    }
   </script>
 </body>
 </html>
