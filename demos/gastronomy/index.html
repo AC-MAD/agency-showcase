@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ristorante Bella Vista | Authentische italienische Küche & Feierlichkeiten</title>
+  <style>
+    :root {
+      --primary: #c2410c;
+      --primary-dark: #9a3412;
+      --gold: #d97706;
+      --dark: #1c1917;
+      --cream: #fefce8;
+      --light: #fafaf9;
+      --gray: #78716c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Georgia, serif; }
+    body { background-color: var(--light); color: var(--dark); line-height: 1.6; }
+
+    .topbar { background: var(--dark); color: #fff; padding: 8px 20px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+    .topbar a { color: #fde047; text-decoration: none; font-weight: bold; }
+
+    header { display: flex; justify-content: space-between; align-items: center; padding: 18px 28px; border-bottom: 1px solid #e7e5e4; position: sticky; top: 0; background: rgba(250,250,249,0.96); backdrop-filter: blur(8px); z-index: 100; }
+    .logo { font-size: 22px; font-weight: 800; color: var(--dark); display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px; }
+    .logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--dark); font-weight: 600; font-size: 14px; }
+    .nav-cta { background: var(--primary); color: white !important; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 14px; transition: background 0.2s; }
+    .nav-cta:hover { background: var(--primary-dark); }
+
+    .hero { padding: 80px 24px; background: linear-gradient(rgba(28,25,23,0.7), rgba(28,25,23,0.75)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat; color: white; text-align: center; }
+    .badge { display: inline-block; background: rgba(217, 119, 6, 0.2); color: #fde047; font-size: 13px; font-weight: 700; text-transform: uppercase; padding: 6px 16px; border-radius: 20px; margin-bottom: 16px; border: 1px solid #ca8a04; }
+    .hero h1 { font-size: 42px; font-weight: 800; max-width: 800px; margin: 0 auto 16px; line-height: 1.2; letter-spacing: -0.5px; }
+    .hero p { font-size: 19px; color: #e7e5e4; max-width: 620px; margin: 0 auto 30px; }
+    .hero-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-reserve { background: var(--primary); color: white; font-weight: 700; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-size: 16px; box-shadow: 0 4px 16px rgba(194,65,12,0.4); }
+    .btn-menu { background: rgba(255,255,255,0.15); border: 2px solid white; color: white; font-weight: 700; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-size: 16px; }
+
+    .strip { display: flex; justify-content: center; gap: 40px; padding: 24px; background: white; border-bottom: 1px solid #e7e5e4; flex-wrap: wrap; font-size: 14px; font-weight: 600; color: #44403c; }
+
+    .section { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
+    .section-title { text-align: center; margin-bottom: 40px; }
+    .section-title h2 { font-size: 30px; font-weight: 800; margin-bottom: 8px; color: var(--dark); }
+    .section-title p { color: var(--gray); font-size: 16px; }
+
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .menu-item { background: white; border: 1px solid #e7e5e4; border-radius: 12px; padding: 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); display: flex; justify-content: space-between; align-items: flex-start; }
+    .menu-desc h4 { font-size: 17px; font-weight: 700; margin-bottom: 4px; color: var(--dark); }
+    .menu-desc p { font-size: 13px; color: var(--gray); line-height: 1.4; }
+    .menu-price { font-weight: 800; color: var(--primary); font-size: 16px; margin-left: 14px; white-space: nowrap; }
+
+    .reserve-box { background: white; border: 2px solid #fed7aa; border-radius: 16px; padding: 36px; max-width: 650px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #d6d3d1; border-radius: 8px; font-size: 15px; }
+    .btn-submit { width: 100%; background: var(--primary); color: white; border: none; padding: 14px; font-size: 16px; font-weight: 700; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
+    .btn-submit:hover { background: var(--primary-dark); }
+
+    .hours-card { background: #292524; color: white; border-radius: 16px; padding: 32px; max-width: 700px; margin: 40px auto 0; text-align: center; }
+    .hours-card h3 { font-size: 22px; margin-bottom: 16px; color: #fde047; }
+    .hours-row { display: flex; justify-content: space-between; padding: 8px 20px; border-bottom: 1px solid #44403c; font-size: 15px; }
+
+    footer { text-align: center; padding: 40px 20px; color: var(--gray); font-size: 13px; border-top: 1px solid #e7e5e4; margin-top: 60px; }
+
+    .mobile-call-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--dark); padding: 12px 16px; box-shadow: 0 -4px 12px rgba(0,0,0,0.2); z-index: 999; }
+    .mobile-call-bar a { background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 16px; }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 28px; }
+      .nav-links { display: none; }
+      .mobile-call-bar { display: block; }
+      body { padding-bottom: 65px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div>📍 Hauptstraße 42, 69117 Heidelberg</div>
+    <div>📞 Reservierung: <a href="tel:06221123456">06221 / 123456</a></div>
+  </div>
+
+  <header>
+    <div class="logo">🍝 Ristorante <span>Bella Vista</span></div>
+    <div class="nav-links">
+      <a href="#speisekarte">Speisekarte</a>
+      <a href="#reservierung">Tisch reservieren</a>
+      <a href="#zeiten">Öffnungszeiten</a>
+    </div>
+    <a href="#reservierung" class="nav-cta">Tisch buchen</a>
+  </header>
+
+  <section class="hero">
+    <div class="badge">Echte italienische Gastfreundschaft</div>
+    <h1>Hausgemachte Pasta, knusprige Steinofenpizza & erlesene Weine.</h1>
+    <p>Genießen Sie original italienische Spezialitäten im Herzen der Altstadt. Frische Zutaten, traditionelle Rezepte und herzlicher Service.</p>
+    <div class="hero-actions">
+      <a href="#reservierung" class="btn-reserve">Online Tisch anfragen</a>
+      <a href="#speisekarte" class="btn-menu">Speisekarte ansehen</a>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div>🍕 Original Steinofen</div>
+    <div>🍷 Über 40 Weine aus Italien</div>
+    <div>🌿 Frische saisonale Zutaten</div>
+    <div>🎉 Separater Raum für Feiern bis 60 Personen</div>
+  </div>
+
+  <section class="section" id="speisekarte">
+    <div class="section-title">
+      <h2>Aus unserer Küche</h2>
+      <p>Ein kleiner Auszug unserer beliebtesten Spezialitäten</p>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-desc">
+          <h4>Pizza Burrata & Parma</h4>
+          <p>San Marzano Tomaten, Fior di Latte, cremige Burrata, 24 Monate gereifter Parmaschinken & frischer Rucola</p>
+        </div>
+        <div class="menu-price">16,50 €</div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-desc">
+          <h4>Tagliolini al Tartufo</h4>
+          <p>Frische Bandnudeln in feiner Salbeibutter mit frisch gehobeltem schwarzen Sommertrüffel und Parmesan</p>
+        </div>
+        <div class="menu-price">18,90 €</div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-desc">
+          <h4>Carpaccio di Manzo</h4>
+          <p>Hauchdünnes Rinderfilet mit Bio-Olivenöl, Zitronendressing, Pinienkernen und gereiftem Grana Padano</p>
+        </div>
+        <div class="menu-price">14,80 €</div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-desc">
+          <h4>Tiramisù Tradizionale</h4>
+          <p>Nach altem Familienrezept mit frischem Mascarpone, Savoiardi-Biskuits und kräftigem Espresso</p>
+        </div>
+        <div class="menu-price">7,50 €</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="reservierung">
+    <div class="section-title">
+      <h2>Tisch reservieren</h2>
+      <p>Schnell und unkompliziert – wir bestätigen Ihre Reservierung innerhalb von 60 Minuten.</p>
+    </div>
+
+    <div class="reserve-box">
+      <form onsubmit="event.preventDefault(); alert('Vielen Dank für Ihre Anfrage! Wir melden uns in Kürze mit Ihrer Bestätigung.');">
+        <div class="form-group">
+          <label>Ihr Name *</label>
+          <input type="text" placeholder="z.B. Familie Weber" required>
+        </div>
+        <div class="form-group">
+          <label>Telefonnummer für Bestätigung *</label>
+          <input type="tel" placeholder="z.B. 0171 2345678" required>
+        </div>
+        <div class="form-group">
+          <label>E-Mail-Adresse *</label>
+          <input type="email" placeholder="name@beispiel.de" required>
+        </div>
+        <div class="form-group">
+          <label>Datum & Uhrzeit *</label>
+          <input type="datetime-local" required>
+        </div>
+        <div class="form-group">
+          <label>Personenanzahl *</label>
+          <select required>
+            <option value="2">2 Personen</option>
+            <option value="3">3 Personen</option>
+            <option value="4" selected>4 Personen</option>
+            <option value="5">5 Personen</option>
+            <option value="6+">6 oder mehr Personen</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Besondere Wünsche oder Anlässe (optional)</label>
+          <textarea rows="3" placeholder="z.B. Geburtstag, ruhiger Tisch am Fenster, Allergien"></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Tisch jetzt verbindlich anfragen</button>
+      </form>
+    </div>
+
+    <div class="hours-card" id="zeiten">
+      <h3>⏰ Öffnungszeiten</h3>
+      <div class="hours-row">
+        <span>Montag – Donnerstag</span>
+        <span>17:00 – 23:00 Uhr</span>
+      </div>
+      <div class="hours-row">
+        <span>Freitag & Samstag</span>
+        <span>12:00 – 15:00 Uhr & 17:00 – 23:30 Uhr</span>
+      </div>
+      <div class="hours-row">
+        <span>Sonntag & Feiertage</span>
+        <span>12:00 – 22:00 Uhr durchgehend</span>
+      </div>
+      <div class="hours-row" style="border-bottom: none; color: #a8a29e;">
+        <span>Dienstag</span>
+        <span>Ruhetag</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="mobile-call-bar">
+    <a href="tel:06221123456">📞 Jetzt anrufen & Tisch reservieren</a>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Ristorante Bella Vista · Heidelberg · Ein interaktives Demo von LocalWeb Studio</p>
+  </footer>
+
+</body>
+</html>
