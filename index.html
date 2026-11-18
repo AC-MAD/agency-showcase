@@ -1,213 +1,997 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LocalWeb Studio | Websites für Handwerker & lokale Unternehmen</title>
+  <title>LocalWeb Studio | Schlüsselfertige Websites für lokale Spitzenbetriebe</title>
+  <meta name="description" content="Wir bauen blitzschnelle, maßgeschneiderte Websites für lokale Handwerker, Dienstleister, Gastronomie & Praxen. Inklusive 72h-Express-Launch & Neukunden-Fokus.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --dark: #0f172a;
-      --slate: #334155;
-      --light-slate: #64748b;
-      --bg-gray: #f8fafc;
-      --border: #e2e8f0;
+      --bg-dark: #05070e;
+      --bg-card: rgba(15, 23, 42, 0.65);
+      --bg-card-hover: rgba(30, 41, 59, 0.85);
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.5);
+      --cyan: #06b6d4;
+      --indigo: #6366f1;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(59, 130, 246, 0.35);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { color: var(--dark); background: #ffffff; line-height: 1.6; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
+    html { background-color: var(--bg-dark); color: var(--text); overflow-x: hidden; scroll-behavior: smooth; }
+    body { min-height: 100vh; position: relative; background: radial-gradient(circle at 50% 0%, #0d1527 0%, #05070e 75%); overflow-x: hidden; }
+
+    /* Canvas background */
+    #heroCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100vh; pointer-events: none; z-index: 1; }
+
+    /* Background Ambient Lights */
+    .glow-blob { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; opacity: 0.35; z-index: 0; }
+    .blob-1 { top: -100px; left: 50%; transform: translateX(-50%); width: 700px; height: 450px; background: radial-gradient(circle, #2563eb, transparent 70%); }
+    .blob-2 { top: 600px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, #6366f1, transparent 70%); }
+    .blob-3 { top: 1400px; left: -100px; width: 600px; height: 600px; background: radial-gradient(circle, #06b6d4, transparent 70%); }
+
+    /* Navigation */
+    header {
+      position: sticky; top: 0; z-index: 1000;
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      background: rgba(5, 7, 14, 0.75);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: all 0.3s ease;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; text-decoration: none; color: white; }
+    .brand-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(135deg, #3b82f6, #06b6d4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; box-shadow: 0 0 20px var(--primary-glow);
+    }
+    .brand span { color: var(--cyan); }
     
-    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 32px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 100; }
-    .logo { font-size: 22px; font-weight: 800; color: var(--dark); display: flex; align-items: center; gap: 8px; }
-    .logo span { color: var(--primary); }
-    .nav-links { display: flex; gap: 24px; align-items: center; }
-    .nav-links a { text-decoration: none; color: var(--slate); font-weight: 600; font-size: 15px; }
-    .nav-links a:hover { color: var(--primary); }
-    .nav-btn { background: var(--primary); color: white !important; padding: 10px 20px; border-radius: 8px; font-weight: 700; transition: background 0.2s; }
-    .nav-btn:hover { background: var(--primary-hover); }
+    .nav-menu { display: flex; align-items: center; gap: 28px; }
+    .nav-menu a { color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; transition: color 0.2s; position: relative; }
+    .nav-menu a:hover { color: #fff; }
+    .nav-menu a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0%; height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--cyan));
+      transition: width 0.3s ease;
+    }
+    .nav-menu a:hover::after { width: 100%; }
+
+    /* Shiny CTA Button */
+    .btn-glow {
+      position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 26px; border-radius: 12px; font-weight: 700; font-size: 14px; text-decoration: none;
+      color: white; background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      box-shadow: 0 0 25px rgba(37, 99, 235, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-glow:hover { transform: translateY(-2px); box-shadow: 0 0 35px rgba(37, 99, 235, 0.7); }
+    .btn-glow::before {
+      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 60%);
+      transform: rotate(45deg); pointer-events: none;
+      animation: buttonLight 4s infinite linear;
+    }
+    @keyframes buttonLight {
+      0% { transform: translate(-100%, -100%) rotate(45deg); }
+      100% { transform: translate(100%, 100%) rotate(45deg); }
+    }
+
+    /* Container */
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 10; }
+
+    /* Hero Section */
+    .hero { padding: 110px 0 80px; text-align: center; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 6px 18px; border-radius: 30px;
+      background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #93c5fd; font-size: 13px; font-weight: 700; margin-bottom: 28px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+    }
+    .hero-badge .pulse-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
+      box-shadow: 0 0 10px #22c55e; animation: pulseGlow 1.8s infinite;
+    }
+    @keyframes pulseGlow { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif; font-size: 64px; font-weight: 900;
+      line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 24px;
+      color: #fff;
+    }
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, #ffffff 20%, #60a5fa 55%, #38bdf8 85%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: 20px; line-height: 1.6; color: var(--text-muted);
+      max-width: 760px; margin: 0 auto 40px; font-weight: 400;
+    }
+    .hero-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 50px; }
     
-    .hero { padding: 90px 24px 70px; text-align: center; max-width: 900px; margin: 0 auto; }
-    .pill { display: inline-block; background: #eff6ff; color: var(--primary); font-size: 13px; font-weight: 700; padding: 6px 16px; border-radius: 30px; margin-bottom: 24px; border: 1px solid #bfdbfe; }
-    .hero h1 { font-size: 48px; font-weight: 900; line-height: 1.18; letter-spacing: -1px; margin-bottom: 20px; }
-    .hero p { font-size: 20px; color: var(--light-slate); max-width: 700px; margin: 0 auto 36px; }
-    .hero-cta { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-    .btn-main { background: var(--primary); color: white; padding: 16px 32px; border-radius: 10px; font-weight: 700; font-size: 16px; text-decoration: none; box-shadow: 0 4px 16px rgba(37,99,235,0.3); }
-    .btn-secondary { background: white; border: 2px solid var(--border); color: var(--slate); padding: 16px 32px; border-radius: 10px; font-weight: 700; font-size: 16px; text-decoration: none; }
+    .btn-secondary-glow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px; border-radius: 12px; font-weight: 700; font-size: 15px; text-decoration: none;
+      color: #fff; background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border); backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+    }
+    .btn-secondary-glow:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
+
+    /* Trust Stats Strip */
+    .trust-strip {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
+      background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border); border-radius: 20px;
+      padding: 24px 32px; backdrop-filter: blur(12px); margin-bottom: 80px;
+    }
+    .trust-item { text-align: center; }
+    .trust-val { font-family: 'Outfit', sans-serif; font-size: 36px; font-weight: 900; color: #fff; }
+    .trust-val span { color: var(--cyan); }
+    .trust-lbl { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+    /* Interactive Showcase Stage */
+    .showcase-stage {
+      background: radial-gradient(circle at 50% 20%, rgba(30, 41, 59, 0.5), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border-highlight);
+      border-radius: 28px; padding: 48px; position: relative; overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      margin-bottom: 120px;
+    }
+    .stage-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px; flex-wrap: wrap; gap: 20px; }
+    .stage-title h2 { font-size: 32px; font-weight: 800; font-family: 'Outfit', sans-serif; }
+    .stage-title p { color: var(--text-muted); font-size: 15px; margin-top: 4px; }
+
+    /* Industry Demo Selector Tabs */
+    .tab-pills { display: flex; gap: 8px; background: rgba(0, 0, 0, 0.4); padding: 6px; border-radius: 14px; border: 1px solid var(--border); flex-wrap: wrap; }
+    .tab-pill {
+      background: transparent; border: none; color: var(--text-muted);
+      padding: 8px 18px; border-radius: 10px; font-weight: 700; font-size: 13px;
+      cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; gap: 8px;
+    }
+    .tab-pill.active { background: var(--primary); color: white; box-shadow: 0 0 16px rgba(59, 130, 246, 0.5); }
+    .tab-pill:hover:not(.active) { color: white; background: rgba(255, 255, 255, 0.05); }
+
+    /* Device Preview Area */
+    .stage-content { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .demo-info h3 { font-size: 26px; font-weight: 800; margin-bottom: 14px; color: #fff; }
+    .demo-info p { color: var(--text-muted); font-size: 16px; line-height: 1.6; margin-bottom: 24px; }
+    .feature-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+    .feature-tag {
+      background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border);
+      padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; color: #cbd5e1;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .feature-tag svg { width: 14px; height: 14px; stroke: var(--cyan); }
+
+    /* Mockup Frame */
+    .mockup-window {
+      background: #090d16; border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+      position: relative; transition: transform 0.3s ease;
+    }
+    .mockup-window:hover { transform: translateY(-4px); }
+    .mockup-bar {
+      background: #111827; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+    .mockup-dots { display: flex; gap: 6px; }
+    .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+    .mockup-address {
+      background: #030712; padding: 4px 14px; border-radius: 20px; font-size: 11px;
+      color: #94a3b8; font-family: monospace; border: 1px solid var(--border);
+    }
+
+    .mockup-preview-img {
+      width: 100%; height: 380px; object-fit: cover; display: block;
+      transition: transform 0.4s ease;
+    }
+    .mockup-window:hover .mockup-preview-img { transform: scale(1.02); }
+    .mockup-overlay-btn {
+      position: absolute; bottom: 20px; right: 20px;
+      background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px);
+      border: 1px solid var(--border-highlight);
+      padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 700;
+      color: white; text-decoration: none; display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4); transition: all 0.2s;
+    }
+    .mockup-overlay-btn:hover { background: var(--primary); border-color: var(--primary); transform: translateX(3px); }
+
+    /* 3D Grid Portfolio Cards */
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-tag {
+      color: var(--cyan); font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 12px; display: inline-block;
+    }
+    .section-title { font-family: 'Outfit', sans-serif; font-size: 42px; font-weight: 900; letter-spacing: -0.5px; color: #fff; }
+    .section-subtitle { color: var(--text-muted); font-size: 17px; max-width: 650px; margin: 12px auto 0; }
+
+    .grid-3d { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 120px; }
+    .card-3d {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+      overflow: hidden; backdrop-filter: blur(12px); position: relative;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex; flex-direction: column;
+    }
+    .card-3d:hover {
+      transform: translateY(-8px); border-color: var(--border-highlight);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(59, 130, 246, 0.15);
+    }
+    .card-img-wrap { position: relative; height: 210px; overflow: hidden; }
+    .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .card-3d:hover .card-img { transform: scale(1.08); }
+    .card-badge {
+      position: absolute; top: 14px; left: 14px;
+      background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px);
+      padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: 700;
+      color: #fff; border: 1px solid var(--border); display: flex; align-items: center; gap: 6px;
+    }
+    .card-body { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
+    .card-body h3 { font-size: 20px; font-weight: 800; margin-bottom: 10px; color: #fff; }
+    .card-body p { color: var(--text-muted); font-size: 14px; line-height: 1.5; margin-bottom: 20px; flex-grow: 1; }
+    .card-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--border); }
+    .card-link { color: var(--cyan); text-decoration: none; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .card-link:hover { color: #fff; }
+
+    /* Interactive ROI Calculator */
+    .calculator-box {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.8));
+      border: 1px solid var(--border-highlight); border-radius: 28px; padding: 48px;
+      backdrop-filter: blur(16px); margin-bottom: 120px;
+    }
+    .calc-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
+    .calc-inputs { display: flex; flex-direction: column; gap: 28px; }
+    .calc-group label { display: flex; justify-content: space-between; font-weight: 700; font-size: 15px; margin-bottom: 10px; color: #fff; }
+    .calc-group label span { color: var(--cyan); font-family: monospace; font-size: 18px; }
     
-    .stats-bar { display: flex; justify-content: center; gap: 48px; padding: 32px 24px; background: var(--bg-gray); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); flex-wrap: wrap; text-align: center; }
-    .stat-number { font-size: 32px; font-weight: 800; color: var(--primary); }
-    .stat-label { font-size: 13px; font-weight: 600; color: var(--light-slate); text-transform: uppercase; margin-top: 4px; }
-    
-    .section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
-    .section-title { text-align: center; margin-bottom: 50px; }
-    .section-title h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
-    .section-title p { color: var(--light-slate); font-size: 17px; }
-    
-    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
-    .portfolio-card { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.04); transition: transform 0.2s; }
-    .portfolio-card:hover { transform: translateY(-6px); }
-    .card-banner { height: 180px; background: linear-gradient(135deg, #0284c7, #0f172a); display: flex; align-items: center; justify-content: center; font-size: 54px; }
-    .card-banner.salon { background: linear-gradient(135deg, #d97706, #18181b); }
-    .card-banner.gastro { background: linear-gradient(135deg, #ea580c, #431407); }
-    .card-banner.praxis { background: linear-gradient(135deg, #0d9488, #042f2e); }
-    .portfolio-body { padding: 24px; }
-    .portfolio-body h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-    .portfolio-body p { color: var(--light-slate); font-size: 14px; margin-bottom: 20px; }
-    .demo-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--primary); text-decoration: none; font-size: 15px; }
-    
-    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-top: 40px; }
-    .pricing-card { border: 1px solid var(--border); border-radius: 16px; padding: 36px; background: white; }
-    .pricing-card.featured { border: 2px solid var(--primary); position: relative; box-shadow: 0 10px 30px rgba(37,99,235,0.1); }
-    .pricing-badge { position: absolute; top: -14px; right: 24px; background: var(--primary); color: white; font-size: 12px; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; }
-    .price-num { font-size: 44px; font-weight: 900; color: var(--dark); margin: 20px 0 10px; }
-    .price-num span { font-size: 16px; font-weight: 500; color: var(--light-slate); }
-    .feature-list { list-style: none; margin: 24px 0 32px; }
-    .feature-list li { padding: 8px 0; font-size: 15px; color: var(--slate); display: flex; align-items: center; gap: 10px; }
-    
-    .contact-card { background: #0f172a; color: white; border-radius: 24px; padding: 60px 36px; text-align: center; max-width: 800px; margin: 0 auto; }
-    .contact-card h2 { font-size: 36px; font-weight: 800; margin-bottom: 16px; }
-    .contact-card p { color: #94a3b8; font-size: 18px; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; }
-    .direct-contact { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; font-size: 18px; font-weight: 700; }
-    .direct-contact a { color: #38bdf8; text-decoration: none; }
-    
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 34px; }
-      .nav-links { display: none; }
+    input[type=range] {
+      width: 100%; height: 8px; border-radius: 5px; background: #1e293b;
+      outline: none; -webkit-appearance: none; cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+      background: var(--cyan); box-shadow: 0 0 12px var(--cyan); cursor: pointer;
+    }
+
+    .calc-results {
+      background: rgba(3, 7, 18, 0.7); border: 1px solid var(--border-highlight);
+      border-radius: 20px; padding: 36px; text-align: center;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.5);
+    }
+    .roi-num {
+      font-family: 'Outfit', sans-serif; font-size: 56px; font-weight: 900;
+      color: #22c55e; margin: 12px 0 6px; letter-spacing: -1px;
+    }
+    .roi-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+    .roi-stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; border-top: 1px solid var(--border); padding-top: 20px; }
+    .roi-stat-val { font-size: 20px; font-weight: 800; color: #fff; }
+    .roi-stat-lbl { font-size: 12px; color: var(--text-muted); }
+
+    /* Before & After Interactive Comparison */
+    .compare-container {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 120px;
+    }
+    .compare-card {
+      border-radius: 24px; padding: 36px; position: relative; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .compare-old { background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2); }
+    .compare-new { background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.3); }
+    .compare-badge {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px;
+      font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .badge-bad { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    .badge-good { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+    .compare-list { list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 14px; font-size: 15px; }
+    .compare-list li { display: flex; align-items: center; gap: 10px; }
+
+    /* Border Beam Pricing Cards */
+    .pricing-wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; margin-bottom: 120px; }
+    .pricing-box {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px;
+      padding: 44px 36px; backdrop-filter: blur(12px); position: relative;
+      display: flex; flex-direction: column;
+    }
+    .pricing-box.popular {
+      background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15), rgba(15, 23, 42, 0.8));
+      border: 1px solid var(--primary);
+      box-shadow: 0 0 50px rgba(59, 130, 246, 0.25);
+    }
+    .popular-pill {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(90deg, #2563eb, #06b6d4); color: white;
+      font-size: 12px; font-weight: 800; text-transform: uppercase;
+      padding: 4px 16px; border-radius: 20px; box-shadow: 0 0 20px rgba(59,130,246,0.6);
+    }
+    .price-amount { font-family: 'Outfit', sans-serif; font-size: 52px; font-weight: 900; color: #fff; margin: 20px 0 10px; }
+    .price-amount span { font-size: 16px; font-weight: 600; color: var(--text-muted); font-family: 'Plus Jakarta Sans', sans-serif; }
+    .price-features { list-style: none; margin: 28px 0 36px; display: flex; flex-direction: column; gap: 14px; flex-grow: 1; }
+    .price-features li { display: flex; align-items: center; gap: 10px; font-size: 15px; color: #e2e8f0; }
+    .check-icon { color: #22c55e; font-weight: 800; }
+
+    /* Infinite Marquee */
+    .marquee-container {
+      overflow: hidden; position: relative; padding: 20px 0; margin-bottom: 100px;
+      mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    }
+    .marquee-track { display: flex; gap: 32px; width: max-content; animation: marqueeScroll 25s linear infinite; }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .review-pill {
+      background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border);
+      padding: 14px 24px; border-radius: 16px; display: flex; align-items: center; gap: 16px;
+      backdrop-filter: blur(8px);
+    }
+    .review-author strong { display: block; font-size: 14px; color: #fff; }
+    .review-author span { font-size: 12px; color: var(--text-muted); }
+    .review-stars { color: #f59e0b; font-size: 13px; }
+
+    /* Contact Card */
+    .contact-hero {
+      background: radial-gradient(circle at 50% 0%, #1e3a8a, #0b1120 70%);
+      border: 1px solid var(--border-highlight); border-radius: 28px;
+      padding: 64px 36px; text-align: center; position: relative; overflow: hidden;
+      margin-bottom: 80px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .contact-hero h2 { font-family: 'Outfit', sans-serif; font-size: 42px; font-weight: 900; margin-bottom: 16px; color: #fff; }
+    .contact-hero p { color: #cbd5e1; font-size: 18px; max-width: 600px; margin: 0 auto 36px; }
+    .contact-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+    .contact-chip {
+      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 14px 28px; border-radius: 14px; color: white; text-decoration: none;
+      font-weight: 700; font-size: 16px; display: flex; align-items: center; gap: 10px;
+      backdrop-filter: blur(10px); transition: all 0.2s;
+    }
+    .contact-chip:hover { background: var(--primary); transform: translateY(-2px); }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 40px 0; text-align: center; color: var(--text-muted); font-size: 13px; }
+    footer a { color: var(--text-muted); text-decoration: none; margin: 0 10px; }
+    footer a:hover { color: white; }
+
+    @media (max-width: 900px) {
+      .hero-title { font-size: 44px; }
+      .stage-content { grid-template-columns: 1fr; }
+      .calc-grid { grid-template-columns: 1fr; }
+      .compare-container { grid-template-columns: 1fr; }
+      .nav-menu { display: none; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Background Animated Lights -->
+  <div class="glow-blob blob-1"></div>
+  <div class="glow-blob blob-2"></div>
+  <div class="glow-blob blob-3"></div>
+
+  <!-- Interactive 60fps Particle Canvas -->
+  <canvas id="heroCanvas"></canvas>
+
+  <!-- Sticky Glass Header -->
   <header>
-    <div class="logo">⚡ LocalWeb <span>Studio</span></div>
-    <div class="nav-links">
-      <a href="#vorteile">Vorteile</a>
-      <a href="#beispiele">Beispiele</a>
+    <a href="#" class="brand">
+      <div class="brand-icon">⚡</div>
+      LocalWeb <span>Studio</span>
+    </a>
+    <nav class="nav-menu">
+      <a href="#demos">Branchen-Demos</a>
+      <a href="#rechner">ROI Rechner</a>
+      <a href="#vergleich">Vorher / Nachher</a>
       <a href="#preise">Preise</a>
-      <a href="#kontakt" class="nav-btn">Kostenlose Website-Analyse</a>
-    </div>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <a href="#kontakt" class="btn-glow">Kostenloses Angebot ➔</a>
   </header>
 
-  <section class="hero">
-    <div class="pill">🚀 Mehr Kundenanfragen für Ihren lokalen Betrieb</div>
-    <h1>Schlüsselfertige Websites für Handwerker & lokale Dienstleister.</h1>
-    <p>Wir bauen moderne, blitzschnelle Websites, die auf Smartphones überzeugen und Besucher in zahlende Kunden verwandeln. Fertig in nur 72 Stunden.</p>
-    <div class="hero-cta">
-      <a href="#beispiele" class="btn-main">Live-Demos ansehen</a>
-      <a href="#kontakt" class="btn-secondary">Kostenloses Angebot anfragen</a>
-    </div>
-  </section>
+  <div class="container">
 
-  <div class="stats-bar" id="vorteile">
-    <div>
-      <div class="stat-number">&lt; 72 Std.</div>
-      <div class="stat-label">Fertigstellung & Livegang</div>
-    </div>
-    <div>
-      <div class="stat-number">100%</div>
-      <div class="stat-label">Mobiloptimiert (iOS & Android)</div>
-    </div>
-    <div>
-      <div class="stat-number">0 €</div>
-      <div class="stat-label">Versteckte Kosten oder Technik-Stress</div>
-    </div>
-  </div>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        72h-Express Launch für lokale Unternehmen
+      </div>
+      <h1 class="hero-title">
+        Websites, die aus Google-Suchern <br>
+        <span class="gradient-text">zahlende Stammkunden machen.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Keine generischen Baukästen. Wir entwickeln maßgeschneiderte, ultra-schnelle Webauftritte für Handwerker, Gastronomie, Salons und Praxen in Ihrer Region.
+      </p>
+      <div class="hero-actions">
+        <a href="#demos" class="btn-glow" style="padding: 16px 36px; font-size: 16px;">
+          🚀 Live-Demos ansehen
+        </a>
+        <a href="#rechner" class="btn-secondary-glow">
+          📊 ROI-Rechner starten
+        </a>
+      </div>
 
-  <section class="section" id="beispiele">
-    <div class="section-title">
-      <h2>Fertige Branchen-Demos</h2>
-      <p>Klicken Sie auf eine Demo, um zu sehen, wie Ihr Webauftritt aussehen könnte.</p>
-    </div>
+      <!-- Trust Strip -->
+      <div class="trust-strip">
+        <div class="trust-item">
+          <div class="trust-val">&lt; <span>72</span>h</div>
+          <div class="trust-lbl">Fertigstellung & Livegang</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-val"><span>99</span>/100</div>
+          <div class="trust-lbl">Google PageSpeed Score</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-val"><span>0</span> €</div>
+          <div class="trust-lbl">Setup-Gebühr im Abo</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-val"><span>100</span>%</div>
+          <div class="trust-lbl">DSGVO & Rechtssicherheit</div>
+        </div>
+      </div>
+    </section>
 
-    <div class="portfolio-grid">
-      <div class="portfolio-card">
-        <div class="card-banner">🔧</div>
-        <div class="portfolio-body">
-          <h3>Handwerk, Sanitär & Bauservice</h3>
-          <p>Ausgelegt auf 1-Klick-Anrufe, 24h-Notdienst-Hervorhebung und ein schnelles Anfrageformular für Kundenangebote.</p>
-          <a href="demos/craftsman/index.html" class="demo-link">Live-Vorschau öffnen ➔</a>
+    <!-- Interactive Live Showcase Stage -->
+    <section class="showcase-stage" id="demos">
+      <div class="stage-header">
+        <div class="stage-title">
+          <h2>Interaktive Branchen-Demos</h2>
+          <p>Klicken Sie durch unsere schlüsselfertigen Demo-Systeme:</p>
+        </div>
+        <div class="tab-pills">
+          <button class="tab-pill active" onclick="switchDemo('craftsman')">🔧 Handwerk & Sanitär</button>
+          <button class="tab-pill" onclick="switchDemo('salon')">✂️ Friseur & Salon</button>
+          <button class="tab-pill" onclick="switchDemo('gastro')">🍝 Gastronomie & Café</button>
+          <button class="tab-pill" onclick="switchDemo('praxis')">🩺 Praxis & Gesundheit</button>
         </div>
       </div>
 
-      <div class="portfolio-card">
-        <div class="card-banner salon">✂️</div>
-        <div class="portfolio-body">
+      <div class="stage-content">
+        <div class="demo-info">
+          <h3 id="demoTitle">Meisterbetrieb Schmidt & Partner</h3>
+          <p id="demoDesc">
+            Entwickelt für Sanitär-, Heizungs- und Dachdeckerbetriebe. Mit 1-Klick Notdienst-Anruf, interaktivem Angebotsrechner und prominenten Kundenbewertungen.
+          </p>
+          <div class="feature-tags" id="demoTags">
+            <div class="feature-tag">📞 1-Klick Notruf-Button</div>
+            <div class="feature-tag">📋 Schnellanfrage für Angebote</div>
+            <div class="feature-tag">⭐ Google Maps Bewertungsintegration</div>
+            <div class="feature-tag">⚡ Unter 0,8s Ladezeit</div>
+          </div>
+          <a id="demoActionBtn" href="demos/craftsman/index.html" target="_blank" class="btn-glow">
+            Vollbild Live-Demo öffnen ➔
+          </a>
+        </div>
+
+        <div class="mockup-window">
+          <div class="mockup-bar">
+            <div class="mockup-dots">
+              <div class="mockup-dot dot-red"></div>
+              <div class="mockup-dot dot-yellow"></div>
+              <div class="mockup-dot dot-green"></div>
+            </div>
+            <div class="mockup-address" id="mockupUrl">https://www.chouifi.com/agency-showcase/demos/craftsman/</div>
+          </div>
+          <img id="mockupImg" src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80" alt="Live Demo Preview" class="mockup-preview-img">
+          <a id="overlayLink" href="demos/craftsman/index.html" target="_blank" class="mockup-overlay-btn">
+            🔍 Live testen
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 Industry Portfolio Cards with Realistic Photography -->
+    <div class="section-header">
+      <span class="section-tag">Portfolio & Branchen</span>
+      <h2 class="section-title">Perfekt auf Ihren Betrieb abgestimmt</h2>
+      <p class="section-subtitle">Wählen Sie Ihre Branche und erleben Sie, wie professionell Ihr Betrieb auf Smartphones und Tablets überzeugen kann.</p>
+    </div>
+
+    <div class="grid-3d">
+      <!-- Craftsman Card -->
+      <div class="card-3d">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80" alt="Handwerk" class="card-img">
+          <div class="card-badge">🔧 Handwerk & Bau</div>
+        </div>
+        <div class="card-body">
+          <h3>Sanitär, Heizung & Bedachung</h3>
+          <p>Ideal für SHK-Betriebe, Dachdecker und Bauunternehmen, die qualifizierte Großaufträge und schnelle Notrufe sichern wollen.</p>
+          <div class="card-footer">
+            <span style="font-size: 13px; color: var(--text-muted);">Launch in 72h</span>
+            <a href="demos/craftsman/index.html" target="_blank" class="card-link">Demo öffnen ➔</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Salon Card -->
+      <div class="card-3d">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80" alt="Salon" class="card-img">
+          <div class="card-badge">✂️ Beauty & Lifestyle</div>
+        </div>
+        <div class="card-body">
           <h3>Friseur, Barbershop & Kosmetik</h3>
-          <p>Edles, modernes Design mit übersichtlicher Menü- & Preisliste, Öffnungszeiten und einfacher Terminanfrage.</p>
-          <a href="demos/salon/index.html" class="demo-link">Live-Vorschau öffnen ➔</a>
+          <p>Edle, ästhetische Bildsprache mit übersichtlicher Preis- und Menükarte, Öffnungszeiten und einfacher Online-Terminanfrage.</p>
+          <div class="card-footer">
+            <span style="font-size: 13px; color: var(--text-muted);">Launch in 72h</span>
+            <a href="demos/salon/index.html" target="_blank" class="card-link">Demo öffnen ➔</a>
+          </div>
         </div>
       </div>
 
-      <div class="portfolio-card">
-        <div class="card-banner gastro">🍝</div>
-        <div class="portfolio-body">
-          <h3>Gastronomie, Ristorante & Café</h3>
-          <p>Sinnliche Präsentation der Speisen, interaktives Reservierungsformular, Öffnungszeiten und Google Maps Routenplaner.</p>
-          <a href="demos/gastronomy/index.html" class="demo-link">Live-Vorschau öffnen ➔</a>
+      <!-- Gastronomy Card -->
+      <div class="card-3d">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Gastronomie" class="card-img">
+          <div class="card-badge">🍝 Gastronomie & Café</div>
+        </div>
+        <div class="card-body">
+          <h3>Ristorante, Bistro & Pizzeria</h3>
+          <p>Sinnliche Präsentation der Speisen, Online-Tischreservierung, Mittagsangebote und Google Maps Routenplaner für Gäste.</p>
+          <div class="card-footer">
+            <span style="font-size: 13px; color: var(--text-muted);">Launch in 72h</span>
+            <a href="demos/gastronomy/index.html" target="_blank" class="card-link">Demo öffnen ➔</a>
+          </div>
         </div>
       </div>
 
-      <div class="portfolio-card">
-        <div class="card-banner praxis">🩺</div>
-        <div class="portfolio-body">
-          <h3>Arztpraxis, Therapie & Gesundheit</h3>
-          <p>Seriöses Praxisprofil, Online-Terminanfrage, Leistungsübersicht, Notfall-Leitfaden und barrierefreie Patientenführung.</p>
-          <a href="demos/praxis/index.html" class="demo-link">Live-Vorschau öffnen ➔</a>
+      <!-- Medical Praxis Card -->
+      <div class="card-3d">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&q=80" alt="Praxis" class="card-img">
+          <div class="card-badge">🩺 Gesundheit & Praxis</div>
+        </div>
+        <div class="card-body">
+          <h3>Arztpraxis, Physio & Therapeuten</h3>
+          <p>Seriöses Praxisprofil mit Online-Terminanfrage, Sprechzeiten, Notfallleitfaden und barrierefreier Patientenführung.</p>
+          <div class="card-footer">
+            <span style="font-size: 13px; color: var(--text-muted);">Launch in 72h</span>
+            <a href="demos/praxis/index.html" target="_blank" class="card-link">Demo öffnen ➔</a>
+          </div>
         </div>
       </div>
     </div>
-  </section>
 
-  <section class="section" id="preise">
-    <div class="section-title">
-      <h2>Einfache, transparente Preise</h2>
-      <p>Keine Agentur-Aufschläge, keine bösen Überraschungen.</p>
+    <!-- Interactive ROI & Revenue Calculator -->
+    <section class="calculator-box" id="rechner">
+      <div class="calc-grid">
+        <div class="calc-inputs">
+          <div>
+            <span class="section-tag">Interaktiver Rechner</span>
+            <h2 style="font-size: 32px; font-weight: 800; font-family: 'Outfit'; color: #fff;">
+              Was bringt Ihnen eine neue Website wirklich?
+            </h2>
+            <p style="color: var(--text-muted); font-size: 15px; margin-top: 6px;">
+              Verschieben Sie die Regler, um Ihr zusätzliches Umsatzpotenzial zu berechnen:
+            </p>
+          </div>
+
+          <div class="calc-group">
+            <label>
+              Durchschnittlicher Auftragswert:
+              <span id="lblOrderVal">2.500 €</span>
+            </label>
+            <input type="range" id="sliderOrderVal" min="200" max="10000" step="100" value="2500" oninput="updateRoi()">
+          </div>
+
+          <div class="calc-group">
+            <label>
+              Gewinnbare Neukunden pro Monat durch die neue Website:
+              <span id="lblClients">3 Kunden</span>
+            </label>
+            <input type="range" id="sliderClients" min="1" max="15" step="1" value="3" oninput="updateRoi()">
+          </div>
+        </div>
+
+        <div class="calc-results">
+          <span style="font-size: 13px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+            Geschätzter Mehrumsatz pro Jahr
+          </span>
+          <div class="roi-num" id="calcAnnualRev">+90.000 €</div>
+          <div class="roi-sub">Durch nur <span id="calcMonthlyClients">3</span> zusätzliche Anfragen im Monat</div>
+
+          <div class="roi-stat-row">
+            <div>
+              <div class="roi-stat-val" id="calcMonthlyRev">7.500 €</div>
+              <div class="roi-stat-lbl">Mehrumsatz / Monat</div>
+            </div>
+            <div>
+              <div class="roi-stat-val" style="color: #38bdf8;" id="calcRoiPercent">7.894%</div>
+              <div class="roi-stat-lbl">Return on Investment (ROI)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Before / After Transformation -->
+    <div class="section-header" id="vergleich">
+      <span class="section-tag">Der Unterschied</span>
+      <h2 class="section-title">Veralteter Webauftritt vs. LocalWeb Studio</h2>
+      <p class="section-subtitle">Warum über 70% der lokalen Kunden bei veralteten Websites direkt abspringen und den Mitbewerber anrufen.</p>
     </div>
 
-    <div class="pricing-grid">
-      <div class="pricing-card featured">
-        <div class="pricing-badge">Beliebteste Option</div>
-        <h3>Rundum-Sorglos Flatrate</h3>
-        <p style="color: var(--light-slate); font-size: 14px;">Ideal für Betriebe, die null Zeit für Website-Pflege haben.</p>
-        <div class="price-num">79 € <span>/ Monat</span></div>
-        <ul class="feature-list">
-          <li>✅ <strong>0 € Setup-Gebühr</strong></li>
-          <li>✅ Maßgeschneiderte Website in 72h</li>
-          <li>✅ Inkl. High-Speed Hosting & SSL</li>
-          <li>✅ Domain & E-Mail Postfach inklusive</li>
-          <li>✅ Monatliche Text- & Inhaltsänderungen</li>
-          <li>✅ DSGVO-konformes Impressum & Datenschutz</li>
+    <div class="compare-container">
+      <div class="compare-card compare-old">
+        <div class="compare-badge badge-bad">❌ Veraltete Website (2012)</div>
+        <h3 style="font-size: 22px; font-weight: 800; color: #fff;">Der Umsatz-Killer</h3>
+        <ul class="compare-list">
+          <li>❌ <strong>Nicht mobiloptimiert</strong>: Kunden müssen mühsam zoomen</li>
+          <li>❌ <strong>Keine 1-Klick Anruftaste</strong>: Nummer muss abgetippt werden</li>
+          <li>❌ <strong>Langsame Ladezeit (6-10s)</strong>: Besucher springen vorher ab</li>
+          <li>❌ <strong>Abmahngefahr</strong>: Veraltetes Impressum & Datenschutz</li>
+          <li>❌ <strong>Unsichtbar bei Google</strong>: Lokale Kunden finden den Betrieb nicht</li>
         </ul>
-        <a href="#kontakt" class="btn-main" style="display: block; text-align: center;">Jetzt unverbindlich anfragen</a>
       </div>
 
-      <div class="pricing-card">
-        <h3>Einmaliger Festpreis</h3>
-        <p style="color: var(--light-slate); font-size: 14px;">Sie besitzen die Website komplett nach Fertigstellung.</p>
-        <div class="price-num">650 € <span>einmalig</span></div>
-        <ul class="feature-list">
-          <li>✅ Komplette Website schlüsselfertig</li>
-          <li>✅ Perfekt optimiert für Smartphones</li>
-          <li>✅ Kontakt- & Angebotsformular</li>
-          <li>✅ Google Maps & Local SEO Setup</li>
-          <li>✅ 14 Tage Support nach Launch inklusive</li>
-          <li>✅ Optional: 29 €/Mo für Hosting & Backups</li>
+      <div class="compare-card compare-new">
+        <div class="compare-badge badge-good">✨ LocalWeb Studio (2026)</div>
+        <h3 style="font-size: 22px; font-weight: 800; color: #fff;">Die Kunden-Magnet-Website</h3>
+        <ul class="compare-list">
+          <li>✅ <strong>100% Smartphone-optimiert</strong>: Perfekt auf iPhone & Android</li>
+          <li>✅ <strong>Fester 1-Klick Anruf-Button</strong>: Sofortiger Draht zum Kunden</li>
+          <li>✅ <strong>Blitzschnell unter 1 Sekunde</strong>: Google PageSpeed 99/100</li>
+          <li>✅ <strong>100% DSGVO-konform</strong>: SSL-Verschlüsselung & Rechtssicherheit</li>
+          <li>✅ <strong>Local SEO Setup</strong>: Top-Positionen in Ihrer Region</li>
         </ul>
-        <a href="#kontakt" class="btn-secondary" style="display: block; text-align: center;">Jetzt anfragen</a>
       </div>
     </div>
-  </section>
 
-  <div class="section" id="kontakt">
-    <div class="contact-card">
-      <h2>Bereit für mehr Kundenaufträge?</h2>
-      <p>Schreiben Sie uns eine kurze Nachricht oder rufen Sie uns direkt an. Wir schauen uns Ihren aktuellen Auftritt kostenlos an.</p>
-      <div class="direct-contact">
-        <div>📞 Tel: <a href="tel:015112345678">0151 / 1234 5678</a></div>
-        <div>📧 E-Mail: <a href="mailto:kontakt@localweb-studio.de">kontakt@localweb-studio.de</a></div>
+    <!-- Infinite Testimonial Ticker -->
+    <div class="marquee-container">
+      <div class="marquee-track">
+        <div class="review-pill">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-author">
+            <strong>Winterbauer GmbH</strong>
+            <span>Dachdeckerbetrieb · Heidelberg</span>
+          </div>
+        </div>
+        <div class="review-pill">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-author">
+            <strong>Peter Werner Sanitär</strong>
+            <span>Sanitär & Heizung · Mannheim</span>
+          </div>
+        </div>
+        <div class="review-pill">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-author">
+            <strong>Kretz Haustechnik</strong>
+            <span>Notdienst & Bäder · Ludwigshafen</span>
+          </div>
+        </div>
+        <div class="review-pill">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-author">
+            <strong>Leymann Bedachungen</strong>
+            <span>Dachdeckermeister · Aachen</span>
+          </div>
+        </div>
+        <div class="review-pill">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-author">
+            <strong>Mismahl Haustechnik</strong>
+            <span>Heizungstechnik · Duisburg</span>
+          </div>
+        </div>
+        <div class="review-pill">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-author">
+            <strong>Hamacher Bedachungen</strong>
+            <span>Meisterbetrieb · Mönchengladbach</span>
+          </div>
+        </div>
+        <!-- Duplicated for seamless loop -->
+        <div class="review-pill">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-author">
+            <strong>Winterbauer GmbH</strong>
+            <span>Dachdeckerbetrieb · Heidelberg</span>
+          </div>
+        </div>
+        <div class="review-pill">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-author">
+            <strong>Peter Werner Sanitär</strong>
+            <span>Sanitär & Heizung · Mannheim</span>
+          </div>
+        </div>
+        <div class="review-pill">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-author">
+            <strong>Kretz Haustechnik</strong>
+            <span>Notdienst & Bäder · Ludwigshafen</span>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Transparent Pricing Section -->
+    <div class="section-header" id="preise">
+      <span class="section-tag">Transparente Konditionen</span>
+      <h2 class="section-title">Einfache, faire Modelle</h2>
+      <p class="section-subtitle">Keine versteckten Gebühren. Keine komplizierten Verträge. Wählen Sie das passende Modell für Ihren Betrieb.</p>
+    </div>
+
+    <div class="pricing-wrap">
+      <!-- Subscription Model (Featured) -->
+      <div class="pricing-box popular">
+        <div class="popular-pill">Meistgewählt von lokalen Betrieben</div>
+        <h3 style="font-size: 24px; font-weight: 800; color: #fff;">Rundum-Sorglos Flatrate</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">Perfekt, wenn Sie sich null um Technik oder Updates kümmern wollen.</p>
+        <div class="price-amount">79 € <span>/ Monat</span></div>
+        <ul class="price-features">
+          <li><span class="check-icon">✓</span> <strong>0 € Setup-Gebühr</strong> (Erstellung inklusive)</li>
+          <li><span class="check-icon">✓</span> Schlüsselfertiger Launch in 72 Stunden</li>
+          <li><span class="check-icon">✓</span> High-Speed Cloud-Hosting & SSL inklusive</li>
+          <li><span class="check-icon">✓</span> Wunsch-Domain & geschäftliche E-Mail</li>
+          <li><span class="check-icon">✓</span> <strong>Monatliche Text- & Inhaltsänderungen</strong></li>
+          <li><span class="check-icon">✓</span> 100% DSGVO-konformes Impressum & Datenschutz</li>
+          <li><span class="check-icon">✓</span> Google Maps & Local-SEO Grundeinrichtung</li>
+        </ul>
+        <a href="#kontakt" class="btn-glow" style="width: 100%;">Jetzt unverbindlich anfragen ➔</a>
+      </div>
+
+      <!-- One-time build -->
+      <div class="pricing-box">
+        <h3 style="font-size: 24px; font-weight: 800; color: #fff;">Einmaliger Festpreis</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">Einmal zahlen, die Website gehört auf Lebenszeit komplett Ihnen.</p>
+        <div class="price-amount">650 € <span>einmalig</span></div>
+        <ul class="price-features">
+          <li><span class="check-icon">✓</span> Komplette Website schlüsselfertig</li>
+          <li><span class="check-icon">✓</span> Fertigstellung innerhalb von 3 Tagen</li>
+          <li><span class="check-icon">✓</span> 100% Smartphone- und Tablet-optimiert</li>
+          <li><span class="check-icon">✓</span> Schnelles Kontakt- und Anfrageformular</li>
+          <li><span class="check-icon">✓</span> Google Maps & Anfahrts-Integration</li>
+          <li><span class="check-icon">✓</span> 14 Tage Support nach Launch inklusive</li>
+          <li><span class="check-icon">✓</span> Optional: Hosting & Updates ab 29 €/Mo</li>
+        </ul>
+        <a href="#kontakt" class="btn-secondary-glow" style="width: 100%; justify-content: center;">Jetzt anfragen ➔</a>
+      </div>
+    </div>
+
+    <!-- Final Call to Action -->
+    <section class="contact-hero" id="kontakt">
+      <h2>Bereit für mehr Kundenanfragen?</h2>
+      <p>Rufen Sie uns direkt an oder schreiben Sie uns eine kurze Nachricht. Wir analysieren Ihren aktuellen Auftritt kostenlos und unverbindlich.</p>
+      <div class="contact-links">
+        <a href="tel:015112345678" class="contact-chip">
+          📞 0151 / 1234 5678
+        </a>
+        <a href="mailto:kontakt@localweb-studio.de" class="contact-chip">
+          📧 kontakt@localweb-studio.de
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2026 LocalWeb Studio · Heidelberg · Mannheim · Ludwigshafen · Aachen · Duisburg · Mönchengladbach</p>
+      <p style="margin-top: 8px;">
+        <a href="demos/craftsman/index.html">Handwerk-Demo</a> ·
+        <a href="demos/salon/index.html">Salon-Demo</a> ·
+        <a href="demos/gastronomy/index.html">Gastro-Demo</a> ·
+        <a href="demos/praxis/index.html">Praxis-Demo</a> ·
+        <a href="app/dashboard.html">CRM Dashboard</a>
+      </p>
+    </footer>
+
   </div>
 
+  <!-- Interactive Demo Switcher & Canvas Script -->
+  <script>
+    // Demo Database
+    const demosData = {
+      craftsman: {
+        title: "Meisterbetrieb Schmidt & Partner",
+        desc: "Entwickelt für Sanitär-, Heizungs- und Dachdeckerbetriebe. Mit 1-Klick Notdienst-Anruf, interaktivem Angebotsrechner und prominenten Kundenbewertungen.",
+        tags: [
+          "📞 1-Klick Notruf-Button",
+          "📋 Schnellanfrage für Angebote",
+          "⭐ Google Maps Bewertungsintegration",
+          "⚡ Unter 0,8s Ladezeit"
+        ],
+        url: "demos/craftsman/index.html",
+        fullUrl: "https://www.chouifi.com/agency-showcase/demos/craftsman/",
+        img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80"
+      },
+      salon: {
+        title: "Salon Elegance & Barbershop",
+        desc: "Edles, modernes Design für Friseure und Kosmetikstudios. Übersichtliche Menü- und Preiskarte, Galerie-Showcase und einfache Online-Terminanfrage.",
+        tags: [
+          "✂️ Stilvolle Preiskarte",
+          "📅 Direkte Terminanfrage",
+          "📸 Vorher/Nachher Galerie",
+          "✨ Mobile-First Luxusdesign"
+        ],
+        url: "demos/salon/index.html",
+        fullUrl: "https://www.chouifi.com/agency-showcase/demos/salon/",
+        img: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=80"
+      },
+      gastro: {
+        title: "Ristorante Bella Vista",
+        desc: "Sinnliche Präsentation italienischer Spezialitäten mit originalem Steinofen. Online-Tischreservierung in 60 Sekunden, Öffnungszeiten und Speisekarte.",
+        tags: [
+          "🍝 Digitale Speisekarte",
+          "🍷 Online Tischreservierung",
+          "📍 Google Maps Routenplaner",
+          "⏰ Live-Öffnungszeiten Anzeige"
+        ],
+        url: "demos/gastronomy/index.html",
+        fullUrl: "https://www.chouifi.com/agency-showcase/demos/gastronomy/",
+        img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80"
+      },
+      praxis: {
+        title: "Praxis Dr. med. Thomas Berg",
+        desc: "Ganzheitliche hausärztliche Betreuung mit patientenfreundlicher Online-Terminvergabe, Sprechzeiten-Übersicht, Leistungsportfolio und Notdienst-Infos.",
+        tags: [
+          "🩺 24/7 Online Terminanfrage",
+          "⏰ Strukturierte Sprechzeiten",
+          "♿ Barrierefreier Anfahrtsweg",
+          "🚨 Notdienst & Bereitschaftsinfos"
+        ],
+        url: "demos/praxis/index.html",
+        fullUrl: "https://www.chouifi.com/agency-showcase/demos/praxis/",
+        img: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1000&q=80"
+      }
+    };
+
+    function switchDemo(key) {
+      const data = demosData[key];
+      if (!data) return;
+
+      // Update pills
+      document.querySelectorAll('.tab-pill').forEach(btn => btn.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      // Update contents
+      document.getElementById('demoTitle').textContent = data.title;
+      document.getElementById('demoDesc').textContent = data.desc;
+      document.getElementById('mockupUrl').textContent = data.fullUrl;
+      document.getElementById('mockupImg').src = data.img;
+      document.getElementById('demoActionBtn').href = data.url;
+      document.getElementById('overlayLink').href = data.url;
+
+      // Update tags
+      const tagsContainer = document.getElementById('demoTags');
+      tagsContainer.innerHTML = '';
+      data.tags.forEach(t => {
+        const el = document.createElement('div');
+        el.className = 'feature-tag';
+        el.textContent = t;
+        tagsContainer.appendChild(el);
+      });
+    }
+
+    // Interactive ROI Calculator logic
+    function updateRoi() {
+      const orderVal = parseInt(document.getElementById('sliderOrderVal').value);
+      const clients = parseInt(document.getElementById('sliderClients').value);
+
+      document.getElementById('lblOrderVal').textContent = orderVal.toLocaleString('de-DE') + ' €';
+      document.getElementById('lblClients').textContent = clients + ' Kunde' + (clients > 1 ? 'n' : '');
+
+      const monthlyRev = orderVal * clients;
+      const annualRev = monthlyRev * 12;
+
+      // Assuming our 79 €/month subscription (948 €/year)
+      const annualCost = 79 * 12;
+      const roi = Math.round(((annualRev - annualCost) / annualCost) * 100);
+
+      document.getElementById('calcAnnualRev').textContent = '+' + annualRev.toLocaleString('de-DE') + ' €';
+      document.getElementById('calcMonthlyRev').textContent = monthlyRev.toLocaleString('de-DE') + ' €';
+      document.getElementById('calcMonthlyClients').textContent = clients;
+      document.getElementById('calcRoiPercent').textContent = roi.toLocaleString('de-DE') + '%';
+    }
+    updateRoi();
+
+    // Interactive Constellation Canvas Animation (60fps)
+    const canvas = document.getElementById('heroCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    const mouse = { x: null, y: null, maxRadius: 160 };
+
+    function initCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = Math.max(window.innerHeight, 900);
+      particles = [];
+      const count = Math.floor((width * height) / 16000);
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6,
+          radius: Math.random() * 2 + 1,
+          baseAlpha: Math.random() * 0.4 + 0.1
+        });
+      }
+    }
+
+    window.addEventListener('resize', initCanvas);
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY + window.scrollY;
+    });
+    window.addEventListener('mouseout', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+
+        // Draw particle
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(96, 165, 250, ${p.baseAlpha})`;
+        ctx.fill();
+
+        // Connect nearby particles
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 110) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(59, 130, 246, ${0.18 * (1 - dist / 110)})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+
+        // Connect to mouse pointer
+        if (mouse.x !== null) {
+          const mdx = p.x - mouse.x;
+          const mdy = p.y - mouse.y;
+          const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mDist < mouse.maxRadius) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(6, 182, 212, ${0.45 * (1 - mDist / mouse.maxRadius)})`;
+            ctx.lineWidth = 1.2;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animateParticles);
+    }
+
+    initCanvas();
+    animateParticles();
+  </script>
 </body>
 </html>
