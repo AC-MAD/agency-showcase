@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Rechnungsvorlage / Invoice</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: #1e293b;
+      margin: 0;
+      padding: 40px;
+      background: #f8fafc;
+    }
+    .invoice-card {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 48px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+    .brand h1 {
+      margin: 0;
+      color: #0f172a;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .brand p {
+      margin: 4px 0 0;
+      color: #64748b;
+      font-size: 14px;
+    }
+    .invoice-meta {
+      text-align: right;
+    }
+    .invoice-meta h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #2563eb;
+    }
+    .invoice-meta p {
+      margin: 4px 0;
+      font-size: 13px;
+      color: #64748b;
+    }
+    .addresses {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .addresses h3 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 28px;
+    }
+    th {
+      background: #f8fafc;
+      text-align: left;
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    td {
+      padding: 16px;
+      font-size: 14px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .text-right {
+      text-align: right;
+    }
+    .totals {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 32px;
+    }
+    .totals-box {
+      width: 280px;
+    }
+    .totals-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 14px;
+    }
+    .totals-row.grand {
+      font-weight: 800;
+      font-size: 18px;
+      color: #0f172a;
+      border-top: 2px solid #0f172a;
+      padding-top: 12px;
+    }
+    .bank-box {
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #475569;
+      border-left: 4px solid #2563eb;
+    }
+    .bank-box p {
+      margin: 4px 0;
+    }
+    .print-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    }
+    .print-btn:hover {
+      background: #1d4ed8;
+    }
+    @media print {
+      body {
+        padding: 0;
+        background: transparent;
+      }
+      .invoice-card {
+        box-shadow: none;
+        padding: 0;
+      }
+      .print-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="print-btn" onclick="window.print()">🖨️ Drucken / Als PDF speichern</button>
+
+  <div class="invoice-card">
+    <div class="header">
+      <div class="brand">
+        <h1 contenteditable="true">Ihre Web-Agentur</h1>
+        <p contenteditable="true">Modernes Webdesign für lokale Unternehmen</p>
+      </div>
+      <div class="invoice-meta">
+        <h2>RECHNUNG</h2>
+        <p><strong>Rechnungs-Nr.:</strong> <span contenteditable="true">RE-2026-001</span></p>
+        <p><strong>Datum:</strong> <span contenteditable="true">17.11.2026</span></p>
+        <p><strong>Zahlbar bis:</strong> <span contenteditable="true">01.12.2026</span></p>
+      </div>
+    </div>
+
+    <div class="addresses">
+      <div>
+        <h3>Rechnungsaussteller</h3>
+        <p contenteditable="true">
+          <strong>Max Mustermann Webdesign</strong><br>
+          Musterstraße 12<br>
+          12345 Musterstadt<br>
+          E-Mail: kontakt@muster-webdesign.de<br>
+          Tel: 0151 / 12345678
+        </p>
+      </div>
+      <div>
+        <h3>Rechnungsempfänger</h3>
+        <p contenteditable="true">
+          <strong>Mustermann Sanitär & Heizung GmbH</strong><br>
+          z. Hd. Herrn Peter Mustermann<br>
+          Handwerkerweg 4<br>
+          12345 Musterstadt
+        </p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Pos.</th>
+          <th>Beschreibung</th>
+          <th class="text-right">Menge</th>
+          <th class="text-right">Einzelpreis</th>
+          <th class="text-right">Gesamt</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td contenteditable="true">
+            <strong>Website-Komplettpaket (Handwerk / Dienstleistung)</strong><br>
+            Responsive Design, Mobiloptimierung, 1-Klick-Anrufbutton, Kontakt- & Anfrageformular, Impressum & DSGVO-Einbindung, lokale Google-Optimierung
+          </td>
+          <td class="text-right" contenteditable="true">1</td>
+          <td class="text-right" contenteditable="true">650,00 €</td>
+          <td class="text-right" contenteditable="true">650,00 €</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td contenteditable="true">
+            <strong>Webhosting & Domain-Einrichtung (Jahr 1)</strong><br>
+            Inkl. SSL-Zertifikat und monatlicher technischer Wartung
+          </td>
+          <td class="text-right" contenteditable="true">1</td>
+          <td class="text-right" contenteditable="true">Inklusive</td>
+          <td class="text-right" contenteditable="true">0,00 €</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="totals">
+      <div class="totals-box">
+        <div class="totals-row">
+          <span>Zwischensumme:</span>
+          <span contenteditable="true">650,00 €</span>
+        </div>
+        <div class="totals-row">
+          <span contenteditable="true">Umsatzsteuer (0% gem. §19 UStG):</span>
+          <span contenteditable="true">0,00 €</span>
+        </div>
+        <div class="totals-row grand">
+          <span>Gesamtbetrag:</span>
+          <span contenteditable="true">650,00 €</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bank-box">
+      <p><strong>Zahlungshinweis:</strong></p>
+      <p>Bitte überweisen Sie den Betrag unter Angabe der Rechnungsnummer auf folgendes Konto:</p>
+      <p contenteditable="true">
+        <strong>Bank:</strong> Sparkasse Musterstadt | <strong>IBAN:</strong> DE00 0000 0000 0000 0000 00 | <strong>BIC:</strong> BYLADEM1001
+      </p>
+      <p style="margin-top: 10px; font-size: 11px; color: #94a3b8;" contenteditable="true">
+        Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerstatus).
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>
