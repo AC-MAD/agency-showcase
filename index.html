@@ -854,10 +854,22 @@
             </div>
           </div>
 
-          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 20px; font-size: 14px;">
-            <div style="color: var(--text-muted); font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px;">Direkter Projektleiter</div>
-            <div style="font-weight: 800; color: #fff; font-size: 16px;">Ayoub Chouifi · LocalWeb Studio</div>
-            <div style="color: var(--cyan); margin-top: 4px;">E-Mail: ac28ayoub@gmail.com</div>
+          <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid var(--border-highlight); border-radius: 18px; padding: 24px; font-size: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+            <div style="color: var(--text-muted); font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px;">Ihr direkter Ansprechpartner</div>
+            <div style="font-weight: 800; color: #fff; font-size: 18px;">Ayoub Chouifi · Inhaber & Projektleiter</div>
+            <div style="color: #94a3b8; font-size: 13px; margin: 4px 0 16px;">LocalWeb Studio · Region Rhein-Neckar, Aachen & NRW</div>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <a href="https://wa.me/4915112345678?text=Hallo%20Herr%20Chouifi,%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20moderne%20Website%20f%C3%BCr%20meinen%20Betrieb." target="_blank" style="background: #25D366; color: white; padding: 12px 18px; border-radius: 12px; font-weight: 800; font-size: 14px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(37,211,102,0.3); transition: transform 0.2s;">
+                💬 Sofort per WhatsApp schreiben
+              </a>
+              <a href="tel:+4915112345678" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding: 11px 18px; border-radius: 12px; font-weight: 700; font-size: 14px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s;">
+                📞 Direkt anrufen: 0151 / 1234 5678
+              </a>
+              <a href="mailto:ac28ayoub@gmail.com?subject=Unverbindliche%20Website-Anfrage" style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); color: #60a5fa; padding: 10px 18px; border-radius: 12px; font-weight: 600; font-size: 13px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                ✉️ Direkte E-Mail: ac28ayoub@gmail.com
+              </a>
+            </div>
           </div>
         </div>
 
@@ -925,9 +937,13 @@
       </div>
     </section>
 
-    <!-- Floating 60-Second Quick Contact Drawer -->
+    <!-- Floating WhatsApp & Quick Contact Buttons -->
+    <a href="https://wa.me/4915112345678?text=Hallo%20Herr%20Chouifi,%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20Website%20f%C3%BCr%20meinen%20Betrieb." target="_blank" class="floating-whatsapp-btn" style="position: fixed; bottom: 28px; left: 28px; z-index: 999; background: #25D366; color: white; border-radius: 50px; padding: 14px 22px; font-weight: 800; font-size: 14px; text-decoration: none; display: flex; align-items: center; gap: 8px; box-shadow: 0 8px 30px rgba(37,211,102,0.5); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <span style="font-size: 20px;">💬</span> WhatsApp-Chat
+    </a>
+
     <button class="floating-widget-btn" onclick="toggleQuickDrawer()">
-      💬 Express-Anfrage (60 Sek.)
+      ⚡ 60-Sek. Rückruf
     </button>
 
     <div class="floating-modal-drawer" id="quickDrawer">
@@ -1215,14 +1231,23 @@
       const wrap = document.getElementById('directFormWrap');
       if (wrap) {
         wrap.innerHTML = `
-          <div style="text-align: center; padding: 48px 20px;">
-            <div style="width: 72px; height: 72px; background: rgba(34, 197, 94, 0.2); border: 2px solid #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 34px; color: #22c55e;">✓</div>
-            <h3 style="font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 12px;">Anfrage erfolgreich eingegangen!</h3>
-            <p style="color: #94a3b8; font-size: 16px; max-width: 450px; margin: 0 auto 24px; line-height: 1.6;">
-              Vielen Dank, <strong>${data.name}</strong>! Ihre Daten für <strong>${data.company || 'Ihr Unternehmen'}</strong> wurden direkt an Projektleiter Ayoub Chouifi übermittelt.
+          <div style="text-align: center; padding: 40px 20px;">
+            <div style="width: 68px; height: 68px; background: rgba(34, 197, 94, 0.2); border: 2px solid #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 32px; color: #22c55e;">✓</div>
+            <h3 style="font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 10px;">Anfrage erfolgreich gespeichert!</h3>
+            <p style="color: #94a3b8; font-size: 15px; max-width: 440px; margin: 0 auto 20px; line-height: 1.5;">
+              Vielen Dank, <strong>${data.name}</strong>! Ihre Anfrage für <strong>${data.company || 'Ihr Unternehmen'}</strong> ist direkt in unserem System eingegangen.
             </p>
-            <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 16px; font-size: 14px; color: #cbd5e1; max-width: 400px; margin: 0 auto;">
-              📞 Wir melden uns innerhalb von <strong>60 Minuten</strong> telefonisch unter <strong>${data.phone}</strong> bei Ihnen.
+            <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 14px; font-size: 13px; color: #cbd5e1; max-width: 420px; margin: 0 auto 20px;">
+              📞 Rückrufgarantie innerhalb von <strong>60 Minuten</strong> unter <strong>${data.phone}</strong>.
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px; max-width: 380px; margin: 0 auto;">
+              <a href="https://wa.me/4915112345678?text=Hallo%20Ayoub,%20ich%20habe%20gerade%20eine%20Website-Anfrage%20f%C3%BCr%20${encodeURIComponent(data.company || data.name)}%20gesendet.%20(Tel:%20${encodeURIComponent(data.phone)})" target="_blank" style="background: #25D366; color: white; padding: 12px; border-radius: 10px; font-weight: 800; text-decoration: none; font-size: 14px; display: block; box-shadow: 0 4px 15px rgba(37,211,102,0.3);">
+                💬 Express: Anfrage sofort via WhatsApp bestätigen
+              </a>
+              <a href="mailto:ac28ayoub@gmail.com?subject=Website-Anfrage%20${encodeURIComponent(data.company || data.name)}&body=Name:%20${encodeURIComponent(data.name)}%0ATelefon:%20${encodeURIComponent(data.phone)}%0AFirma:%20${encodeURIComponent(data.company)}%0ABranche:%20${encodeURIComponent(data.niche)}%0ANachricht:%20${encodeURIComponent(data.message || '')}" style="background: rgba(255,255,255,0.08); color: #cbd5e1; padding: 10px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 13px; display: block;">
+                ✉️ In Ihrem E-Mail-Programm öffnen
+              </a>
             </div>
           </div>
         `;
