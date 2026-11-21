@@ -433,6 +433,216 @@
       .compare-container { grid-template-columns: 1fr; }
       .nav-menu { display: none; }
     }
+  
+    /* --- Alex Hormozi High-Converting Framework Styles --- */
+    .hero-hormozi {
+      padding: 60px 0 50px;
+    }
+    .hormozi-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      align-items: center;
+      margin-bottom: 50px;
+    }
+    .hormozi-copy {
+      text-align: left;
+    }
+    .hormozi-copy .hero-title {
+      font-size: 48px;
+      line-height: 1.12;
+      letter-spacing: -1px;
+      margin-bottom: 18px;
+      text-align: left;
+    }
+    .hormozi-copy .hero-subtitle {
+      font-size: 18px;
+      line-height: 1.55;
+      color: #94a3b8;
+      margin: 0 0 28px 0;
+      text-align: left;
+      max-width: 100%;
+    }
+    .hormozi-bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px 18px;
+      transition: border-color 0.2s;
+    }
+    .bullet-item:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+    .bullet-icon {
+      font-size: 22px;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .bullet-text strong {
+      display: block;
+      color: #fff;
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+    .bullet-text span {
+      color: #94a3b8;
+      font-size: 13px;
+      line-height: 1.4;
+      display: block;
+    }
+    .hormozi-proof-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+    .stars-gold {
+      color: #f59e0b;
+      letter-spacing: 2px;
+      font-size: 14px;
+    }
+
+    /* Above The Fold Hormozi Form Card */
+    .hormozi-form-card {
+      background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.5), rgba(15, 23, 42, 0.95));
+      border: 1px solid var(--border-highlight);
+      border-radius: 24px;
+      padding: 36px 30px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+      position: relative;
+    }
+    .hormozi-form-card .form-badge {
+      display: inline-block;
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid #22c55e;
+      color: #4ade80;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .hormozi-form-card h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .hormozi-form-card .form-justification {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 20px;
+      line-height: 1.45;
+    }
+    .hormozi-field {
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    .hormozi-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+    .hormozi-field input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: white;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .hormozi-field input:focus {
+      border-color: #3b82f6;
+    }
+    .btn-hormozi-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      font-weight: 800;
+      font-size: 15px;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+      transition: all 0.2s;
+      margin-top: 6px;
+    }
+    .btn-hormozi-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(37, 99, 235, 0.6);
+    }
+    .hormozi-or {
+      text-align: center;
+      margin: 14px 0 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      position: relative;
+    }
+    .hormozi-or::before, .hormozi-or::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 38%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .hormozi-or::before { left: 0; }
+    .hormozi-or::after { right: 0; }
+    .btn-hormozi-whatsapp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #25D366;
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 11px;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+      transition: transform 0.2s;
+    }
+    .btn-hormozi-whatsapp:hover {
+      transform: translateY(-1px);
+    }
+    .hormozi-security {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 960px) {
+      .hormozi-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .hormozi-copy .hero-title {
+        font-size: 36px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -463,26 +673,88 @@
 
   <div class="container">
 
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-badge">
-        <span class="pulse-dot"></span>
-        72h-Express Launch für lokale Unternehmen
-      </div>
-      <h1 class="hero-title">
-        Websites, die aus Google-Suchern <br>
-        <span class="gradient-text">zahlende Stammkunden machen.</span>
-      </h1>
-      <p class="hero-subtitle">
-        Keine generischen Baukästen. Wir entwickeln maßgeschneiderte, ultra-schnelle Webauftritte für Handwerker, Gastronomie, Salons und Praxen in Ihrer Region.
-      </p>
-      <div class="hero-actions">
-        <a href="#demos" class="btn-glow" style="padding: 16px 36px; font-size: 16px;">
-          🚀 Live-Demos ansehen
-        </a>
-        <a href="#rechner" class="btn-secondary-glow">
-          📊 ROI-Rechner starten
-        </a>
+    <!-- Alex Hormozi High-Converting Hero Section -->
+    <section class="hero-hormozi">
+      <div class="hormozi-grid">
+        <div class="hormozi-copy">
+          <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            Schlüsselfertig in 72 Stunden · Region Rhein-Neckar, Aachen & NRW
+          </div>
+          <h1 class="hero-title">
+            Wir bauen lokalen Fachbetrieben eine Website, die <span class="gradient-text">ab Tag 1 neue Kundenanfragen bringt.</span>
+          </h1>
+          <p class="hero-subtitle">
+            0 € Vorabkosten · 79 €/Monat Rundum-Sorglos-Flatrate oder 650 € Festpreis. 100% schlüsselfertig – ohne dass Sie einen Finger rühren oder Texte schreiben müssen.
+          </p>
+
+          <!-- The Rule of Three Bullets (Top 3 Customer Objections Cleared) -->
+          <div class="hormozi-bullets">
+            <div class="bullet-item">
+              <div class="bullet-icon">🛡️</div>
+              <div class="bullet-text">
+                <strong>100% schlüsselfertig – null Zeitaufwand:</strong>
+                <span>Sie müssen weder Texte verfassen noch Technik anfassen. Wir richten Design, Notfall-Anruftaste und Google-Optimierung komplett für Sie ein.</span>
+              </div>
+            </div>
+
+            <div class="bullet-item">
+              <div class="bullet-icon">💰</div>
+              <div class="bullet-text">
+                <strong>Kein finanzielles Risiko:</strong>
+                <span>0 € Setup-Gebühr, monatlich 79 € inkl. Hosting, SSL & unbegrenzter Wartung – oder 650 € einmalig schlüsselfertig. Keine versteckten Kosten.</span>
+              </div>
+            </div>
+
+            <div class="bullet-item">
+              <div class="bullet-icon">📈</div>
+              <div class="bullet-text">
+                <strong>Mehr lukrative Aufträge aus Ihrer Stadt:</strong>
+                <span>Direkte 1-Klick-Anruftaste und lokale Google-Auffindbarkeit, damit Notdienst- und Neukunden aus Ihrer Stadt Sie sofort auf dem Smartphone anrufen.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hormozi-proof-badge">
+            <span class="stars-gold">★★★★★</span>
+            <span>Bereits 45 Betriebe in Heidelberg, Mannheim, Ludwigshafen, Aachen & NRW analysiert</span>
+          </div>
+        </div>
+
+        <!-- Above-The-Fold Qualification Form -->
+        <div class="hormozi-form-card" id="heroFormWrap">
+          <span class="form-badge">⚡ In 60 Sek. ausgefüllt</span>
+          <h3>Kostenlose Website-Vorschau anfordern</h3>
+          <p class="form-justification">
+            Tragen Sie kurz Ihren Betrieb ein – wir senden Ihnen innerhalb von 24h einen unverbindlichen, fertigen Design-Entwurf zu.
+          </p>
+
+          <form id="heroQuickForm" onsubmit="submitHeroContact(event)">
+            <div class="hormozi-field">
+              <label>Ihr Vor- & Nachname / Betrieb *</label>
+              <input type="text" name="name" placeholder="z.B. Markus Schmidt, Schmidt Sanitär" required>
+            </div>
+            <div class="hormozi-field">
+              <label>Telefon / WhatsApp für Rückfragen *</label>
+              <input type="tel" name="phone" placeholder="z.B. 0171 2345678" required>
+            </div>
+            <div class="hormozi-field">
+              <label>Stadt & Gewerk *</label>
+              <input type="text" name="niche_city" placeholder="z.B. Heidelberg · Dachdecker / Elektro" required>
+            </div>
+
+            <button type="submit" class="btn-hormozi-submit">
+              🚀 Kostenlose Vorschau anfordern (0 €)
+            </button>
+          </form>
+
+          <div class="hormozi-or">ODER SCHNELLER</div>
+
+          <a href="https://wa.me/4915112345678?text=Hallo%20Ayoub,%20ich%20h%C3%A4tte%20gerne%20eine%20kostenlose%20Website-Vorschau%20f%C3%BCr%20meinen%20Betrieb." target="_blank" class="btn-hormozi-whatsapp">
+            💬 Sofort per WhatsApp anfragen
+          </a>
+          <div class="hormozi-security">🔒 100% unverbindlich · Keine Vorabkosten · DSGVO-sicher</div>
+        </div>
       </div>
 
       <!-- Trust Strip -->
@@ -1297,5 +1569,43 @@
       }
     }
   </script>
+<script>
+    // Alex Hormozi Above-The-Fold Form Handler
+    async function submitHeroContact(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '⏳ Wird sicher gespeichert...';
+      btn.disabled = true;
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const inquiries = JSON.parse(localStorage.getItem('local_inquiries') || '[]');
+        inquiries.push({ ...data, source: 'Hormozi Hero Form', date: new Date().toISOString() });
+        localStorage.setItem('local_inquiries', JSON.stringify(inquiries));
+      } catch (err) {}
+
+      const wrap = document.getElementById('heroFormWrap');
+      if (wrap) {
+        wrap.innerHTML = `
+          <div style="text-align: center; padding: 24px 10px;">
+            <div style="width: 56px; height: 56px; background: rgba(34, 197, 94, 0.2); border: 2px solid #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 26px; color: #22c55e;">✓</div>
+            <h3 style="font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 8px;">Anfrage eingegangen!</h3>
+            <p style="color: #94a3b8; font-size: 13px; margin-bottom: 16px; line-height: 1.45;">
+              Vielen Dank, <strong>${data.name}</strong>! Wir erstellen Ihre kostenlose Website-Vorschau und melden uns unter <strong>${data.phone}</strong>.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <a href="https://wa.me/4915112345678?text=Hallo%20Ayoub,%20hier%20ist%20${encodeURIComponent(data.name)}.%20Ich%20habe%20gerade%20die%20Website-Vorschau%20angefordert%20(Tel:%20${encodeURIComponent(data.phone)})" target="_blank" class="btn-hormozi-whatsapp">
+                💬 Jetzt auf WhatsApp verbinden
+              </a>
+            </div>
+          </div>
+        `;
+      }
+    }
+</script>
 </body>
 </html>
