@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales & Closing Blueprint · LocalWeb Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0b0f19;
+            --bg-secondary: #111827;
+            --bg-card: rgba(17, 24, 39, 0.85);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(59, 130, 246, 0.4);
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --accent-blue: #3b82f6;
+            --accent-indigo: #6366f1;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Golden Question Banner */
+        .golden-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.04) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            margin-bottom: 40px;
+            position: relative;
+            box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.15);
+        }
+
+        .golden-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            color: #fbbf24;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .golden-quote {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.4;
+            margin-bottom: 14px;
+        }
+
+        .golden-desc {
+            font-size: 0.95rem;
+            color: #d1d5db;
+        }
+
+        /* Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 28px;
+            backdrop-filter: blur(12px);
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .card-title .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+            font-size: 1rem;
+        }
+
+        /* Script Steps */
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .step-item {
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-blue);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .step-text {
+            font-size: 0.95rem;
+            color: #e5e7eb;
+            font-style: italic;
+        }
+
+        /* Objections Accordion */
+        .objection-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .objection-trigger {
+            width: 100%;
+            text-align: left;
+            padding: 16px 20px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .objection-content {
+            padding: 0 20px 18px 20px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.06);
+            margin-top: 4px;
+            padding-top: 12px;
+        }
+
+        .objection-answer {
+            color: #34d399;
+            font-weight: 500;
+            margin-top: 6px;
+        }
+
+        /* Priority Call List */
+        .call-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 0.9rem;
+        }
+
+        .call-table th {
+            text-align: left;
+            padding: 10px 14px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .call-table td {
+            padding: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #e5e7eb;
+        }
+
+        .btn-call {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: var(--accent-emerald);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-call:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-demo {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .btn-demo:hover {
+            background: rgba(59, 130, 246, 0.25);
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        .footer-nav a {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-decoration: none;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .footer-nav a:hover {
+            color: #fff;
+            border-color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <div class="badge">🔥 High-Converting Sales Blueprint</div>
+        <h1>Der 60-Sekunden Telefon- & Closing-Leitfaden</h1>
+        <p class="subtitle">Basiert auf dem Pait-Pro Framework: Keine Fachsimpelei, kein Pitch von Funktionen – sondern Fokus auf lukrative Aufträge und die Golden Question.</p>
+    </header>
+
+    <!-- The Golden Question -->
+    <div class="golden-box">
+        <div class="golden-tag">⭐ The Golden Question (Die Schlüssel-Frage im Verkaufsgespräch)</div>
+        <div class="golden-quote">
+            „Herr [Name], wenn Ihre Website ab nächster Woche eine einzige Sache perfekt für Ihren Betrieb erledigen könnte – ob das mehr Anrufe für lukrative Aufträge sind, der 1-Klick Notdienst auf dem Handy oder weniger Zeitaufwand für Kundenrückfragen – was wäre für Sie aktuell das Wichtigste?“
+        </div>
+        <div class="golden-desc">
+            <strong>Warum das sofort funktioniert:</strong> Handwerker hassen technische Verkaufsgespräche. Diese Frage macht Sie sofort vom „nervigen Webdesigner“ zum <strong>betriebswirtschaftlichen Partner</strong>. Der Inhaber nennt Ihnen exakt sein größtes Problem – und Sie schließen ihn genau darauf ab.
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <!-- 60-Second Cold Call Script -->
+        <div class="card">
+            <div class="card-title">
+                <span class="icon">📞</span>
+                60-Sekunden Telefon-Leitfaden
+            </div>
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-label">1. Opener (Entwaffnend & Lokal)</div>
+                    <div class="step-text">„Guten Tag Herr [Name], Ayoub Chouifi hier aus Heidelberg. Ich halte mich ganz kurz: Ich rufe nicht an, um Ihnen etwas aufzudrängen.“</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">2. Beobachtung & Nutzen (Kein Verkaufs-Gelaber)</div>
+                    <div class="step-text">„Ich habe mir Ihren aktuellen Webauftritt auf dem Smartphone angesehen. Auf Handys lädt die Seite recht langsam und Kunden können Sie im Notfall nicht per 1-Klick direkt anrufen. Da gehen jeden Monat lukrative Aufträge verloren.“</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">3. Das Geschenk (Pre-Built Demo)</div>
+                    <div class="step-text">„Ich habe mir vorab schon 10 Minuten Zeit genommen und einen fertigen, mobilen Muster-Entwurf für [Firma] vorbereitet – mit 1-Klick Notdienst-Knopf und Leistungsübersicht.“</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">4. The Close (Kein Risiko)</div>
+                    <div class="step-text">„Haben Sie 2 Minuten Zeit, dass ich Ihnen den Link kurz per WhatsApp oder E-Mail rüberschicke, damit Sie unverbindlich einen Blick drauf werfen können?“</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- The 5 Outreach Strategies -->
+        <div class="card">
+            <div class="card-title">
+                <span class="icon">🚀</span>
+                Die 5 Blaupausen-Strategien
+            </div>
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-label">1. Pre-Built Demo („Build Before You Pitch“)</div>
+                    <div class="step-text">Statt einer theoretischen Idee zeigen wir dem Inhaber direkt seinen fertigen, blitzschnellen Prototyp. Die Conversion ist 5x höher als bei Kaltakquise ohne Vorschau.</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">2. 90-Sekunden Loom Video Walkthrough</div>
+                    <div class="step-text">Screen-Recording: Handyansicht seiner alten Website (zeigt Ladezeit/Fehler) ➔ Umschalten auf unsere mobile Demo. Per Mail/WhatsApp senden.</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">3. Lokaler Vor-Ort-Besuch (Walk-In)</div>
+                    <div class="step-text">Bei Betrieben im Umkreis Heidelberg/Mannheim persönlich vorbeigehen, Inhaber kurz begrüßen und Flyer mit QR-Code zum Live-Entwurf überreichen.</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">4. Google Maps & Notdienst-Audit</div>
+                    <div class="step-text">Betriebe kontaktieren, die bei Google Maps gute Bewertungen haben, aber keinen funktionierenden mobilen Direktkontakt.</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">5. Flatrate-Modell (0 € Setup / 79 € Mo)</div>
+                    <div class="step-text">Nimmt jede Kaufhürde. Kein 3.000 € Klumpenrisiko für den Betrieb, sondern planbare monatliche Einnahmen (MRR) für uns.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Einwandbehandlung Matrix -->
+    <div class="card" style="margin-bottom: 40px;">
+        <div class="card-title">
+            <span class="icon">🛡️</span>
+            Die 4 häufigsten Einwände & Sofort-Antworten
+        </div>
+        
+        <div class="objection-card">
+            <div class="objection-trigger">
+                <span>1. „Wir haben schon bis oben hin genug Aufträge / keine Zeit!“</span>
+                <span>▾</span>
+            </div>
+            <div class="objection-content">
+                <strong>Hintergrund:</strong> Der Handwerker denkt, Sie wollen ihm noch mehr Kleinreparaturen bringen.<br>
+                <div class="objection-answer">
+                    ➔ <strong>Ihre Antwort:</strong> „Verstehe ich zu 100%! Es geht auch nicht darum, Sie mit 50-Euro-Kleinaufträgen zu überlasten, sondern um zwei Dinge: Erstens die lukrativen Großaufträge aus Ihrer Region herauszufiltern, und zweitens eine moderne Karriereseite zu haben, damit neue Gesellen und Azubis sich bei Ihnen bewerben statt bei der Konkurrenz.“
+                </div>
+            </div>
+        </div>
+
+        <div class="objection-card">
+            <div class="objection-trigger">
+                <span>2. „Wir haben doch schon eine Website!“</span>
+                <span>▾</span>
+            </div>
+            <div class="objection-content">
+                <strong>Hintergrund:</strong> Er weiß oft nicht, wie schrecklich die Seite auf modernen Smartphones aussieht.<br>
+                <div class="objection-answer">
+                    ➔ <strong>Ihre Antwort:</strong> „Ja, genau die habe ich mir angesehen! Auf dem Computer ist das in Ordnung – aber über 70% der Kunden suchen heute abends oder im Notfall auf dem Smartphone. Wenn die Seite dort 6 Sekunden lädt und kein 1-Klick-Anrufbutton da ist, klickt der Kunde zurück und ruft den nächsten Betrieb an. Ich habe Ihnen genau das in unserem Entwurf gelöst.“
+                </div>
+            </div>
+        </div>
+
+        <div class="objection-card">
+            <div class="objection-trigger">
+                <span>3. „Was kostet das denn?“</span>
+                <span>▾</span>
+            </div>
+            <div class="objection-content">
+                <strong>Hintergrund:</strong> Handwerker haben Angst vor undurchsichtigen 2.500 € bis 5.000 € Agenturrechnungen.<br>
+                <div class="objection-answer">
+                    ➔ <strong>Ihre Antwort:</strong> „Wir arbeiten mit einem extrem fairen Partnermodell: 0 € Einrichtungsgebühr und nur 79 € im Monat inklusive Hosting, Domain, SSL, Updates und Betreuung – monatlich flexibel. Alternativ einmalig 650 € schlüsselfertig. Ein einziger neuer Auftrag durch die Website finanziert das Ganze für das gesamte Jahr.“
+                </div>
+            </div>
+        </div>
+
+        <div class="objection-card">
+            <div class="objection-trigger">
+                <span>4. „Ich habe keine Zeit für Fotos, Texte oder Meetings.“</span>
+                <span>▾</span>
+            </div>
+            <div class="objection-content">
+                <strong>Hintergrund:</strong> Angst vor zeitlichem Mehraufwand im vollen Meister-Alltag.<br>
+                <div class="objection-answer">
+                    ➔ <strong>Ihre Antwort:</strong> „Sie müssen gar nichts machen. Wir übernehmen Texte, Struktur, rechtssicheres Impressum und Mobiloptimierung komplett schlüsselfertig. Wenn Sie Ihr Okay geben, geht die Seite in 48 Stunden live – 0 Minuten Zeitaufwand für Sie.“
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Priority Calling Roster (Heidelberg / Mannheim Cluster) -->
+    <div class="card">
+        <div class="card-title">
+            <span class="icon">🎯</span>
+            Montagmorgen Anrufliste (08:30 – 10:30 Uhr)
+        </div>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 12px;">
+            Diese 5 Betriebe haben nachgewiesen veraltete Webseiten / hohe Google-Relevanz und liegen direkt im lokalen Cluster.
+        </p>
+        <table class="call-table">
+            <thead>
+                <tr>
+                    <th>Betrieb & Inhaber</th>
+                    <th>Ort & Gewerk</th>
+                    <th>Telefon</th>
+                    <th>Vorbereitete Demo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Winterbauer GmbH</strong><br><small style="color: var(--text-muted);">Sebastian Winterbauer</small></td>
+                    <td>Heidelberg · Sanitär/Heizung</td>
+                    <td><a href="tel:06221739260" class="btn-call">📞 06221 / 739260</a></td>
+                    <td><a href="../demos/craftsman/" target="_blank" class="btn-demo">Muster-Demo ↗</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Holschuh Bedachungen</strong><br><small style="color: var(--text-muted);">Christin Holschuh</small></td>
+                    <td>Heidelberg · Dachdecker</td>
+                    <td><a href="tel:06221373755" class="btn-call">📞 06221 / 373755</a></td>
+                    <td><a href="../demos/craftsman/" target="_blank" class="btn-demo">Muster-Demo ↗</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Fehl Heizung Sanitär</strong><br><small style="color: var(--text-muted);">Manuel Fehl</small></td>
+                    <td>Mannheim · Sanitär/Klima</td>
+                    <td><a href="tel:06217249150" class="btn-call">📞 0621 / 7249150</a></td>
+                    <td><a href="../demos/craftsman/" target="_blank" class="btn-demo">Muster-Demo ↗</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Wojtischek Sanitär</strong><br><small style="color: var(--text-muted);">Tobias Lanzendorfer</small></td>
+                    <td>Mannheim · Haustechnik</td>
+                    <td><a href="tel:0621152648" class="btn-call">📞 0621 / 152648</a></td>
+                    <td><a href="../demos/craftsman/" target="_blank" class="btn-demo">Muster-Demo ↗</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Kretz Sanitär & Heizung</strong><br><small style="color: var(--text-muted);">Peter Kretz</small></td>
+                    <td>Mannheim · Haustechnik</td>
+                    <td><a href="tel:0621703081" class="btn-call">📞 0621 / 703081</a></td>
+                    <td><a href="../demos/craftsman/" target="_blank" class="btn-demo">Muster-Demo ↗</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer-nav">
+        <a href="../app/dashboard.html">📊 CRM Dashboard</a>
+        <a href="../index.html">🌐 Hauptseite</a>
+        <a href="contract_generator.html">📝 Vertrag-Generator</a>
+        <a href="onboarding_form.html">🚀 Onboarding Wizard</a>
+    </div>
+</div>
+
+</body>
+</html>
